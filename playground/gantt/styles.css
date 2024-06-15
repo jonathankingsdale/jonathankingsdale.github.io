@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.input-container {
+  width: 40%;
+  padding: 20px;
+  box-sizing: border-box;
+  border-right: 1px solid #ddd;
+}
+
+.input-container textarea {
+  width: 100%;
+  height: calc(100% - 40px);
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.chart-container {
+  width: 60%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#chart_div {
+  width: 100%;
+  height: 100%;
+}
