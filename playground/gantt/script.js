@@ -8,16 +8,17 @@ function initialize() {
 }
 
 function drawChart() {
-  var jsonInput = document.getElementById("jsonInput").value;
+  const jsonInput = document.getElementById("jsonInput").value;
 
+  let jsonData;
   try {
-    var jsonData = JSON.parse(jsonInput);
+    jsonData = JSON.parse(jsonInput);
   } catch (e) {
     console.error("Failed to parse JSON.");
     return;
   }
 
-  var data = new google.visualization.DataTable();
+  const data = new google.visualization.DataTable();
   data.addColumn("string", "Task ID");
   data.addColumn("string", "Task Name");
   data.addColumn("string", "Resource");
@@ -27,7 +28,7 @@ function drawChart() {
   data.addColumn("number", "Percent Complete");
   data.addColumn("string", "Dependencies");
 
-  var rows = jsonData.map((task) => {
+  const rows = jsonData.map((task) => {
     return [
       task.task_id,
       task.task_name,
@@ -42,7 +43,7 @@ function drawChart() {
 
   data.addRows(rows);
 
-  var options = {
+  const options = {
     height: 400,
     gantt: {
       criticalPathEnabled: false,
@@ -50,7 +51,7 @@ function drawChart() {
     },
   };
 
-  var chart = new google.visualization.Gantt(
+  const chart = new google.visualization.Gantt(
     document.getElementById("chart_div")
   );
 
