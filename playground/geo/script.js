@@ -57,7 +57,6 @@ function drawChart() {
   };
 
   let options = {};
-  console.log(jsonData.Map);
   if (jsonData.Map in regionToCodeMap) {
     options.region = regionToCodeMap[jsonData.Map];
   }
