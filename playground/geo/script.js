@@ -19,7 +19,7 @@ function drawChart() {
     return;
   }
 
-  let arr = [["Country", "Popularity"]];
+  let arr = [["Country", "Value"]];
   for (const [country, value] of Object.entries(jsonData.Countries)) {
     arr.push([country, value]);
   }
