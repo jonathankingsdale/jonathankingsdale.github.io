@@ -4,25 +4,27 @@
       type="text/javascript"
       src="https://www.gstatic.com/charts/loader.js"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"
+      integrity="sha512-CSBhVREyzHAjAFfBlIBakjoRUKp5h7VSweP0InR/pAJyptH7peuhCsqAI/snV+TwZmXZqoUklpXp6R6wMnYf5Q=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <script type="text/javascript" src="script.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="input-container">
-        <textarea id="jsonInput" placeholder="Enter JSON data here...">
-{
-  "Map": "World",
-  "Countries":
-  {
-    "Germany": 200,
-    "United States": 300,
-    "Brazil": 400,
-    "Canada": 500,
-    "France": 600,
-    "Russia": 700
-  }
-}
+        <textarea id="yamlInput" placeholder="Enter JSON data here...">
+Map: World
+Countries:
+  Germany: 200
+  United States: 300
+  Brazil: 400
+  Canada: 500
+  France: 600
+  Russia: 700
             </textarea
         >
       </div>

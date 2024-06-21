@@ -4,16 +4,16 @@ google.charts.load("current", {
 google.charts.setOnLoadCallback(initialize);
 
 function initialize() {
-  document.getElementById("jsonInput").addEventListener("input", drawChart);
+  document.getElementById("yamlInput").addEventListener("input", drawChart);
   drawChart();
 }
 
 function drawChart() {
-  const jsonInput = document.getElementById("jsonInput").value;
+  const yamlInput = document.getElementById("yamlInput").value;
 
   let jsonData;
   try {
-    jsonData = JSON.parse(jsonInput);
+    jsonData = jsyaml.load(yamlInput);
   } catch (e) {
     console.error("Failed to parse JSON.");
     return;
