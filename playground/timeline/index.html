@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script type="text/javascript" src="script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="input-container">
+        <textarea id="jsonInput" placeholder="Enter JSON data here...">
+[
+  {
+    "resource": "Component 1",
+    "task_name": "Build 1",
+    "start_time": "2024-07-14T01:00:00",
+    "end_time": "2024-07-14T02:00:00"
+  },
+  {
+    "resource": "Component 1",
+    "task_name": "Build 2",
+    "start_time": "2024-07-14T02:00:00",
+    "end_time": "2024-07-14T02:30:00"
+  },
+  {
+    "resource": "Component 2",
+    "task_name": "Build 3",
+    "start_time": "2024-07-14T03:00:00",
+    "end_time": "2024-07-14T03:45:00"
+  }
+]
+            </textarea
+        >
+      </div>
+      <div class="chart-container">
+        <div id="chart_div"></div>
+      </div>
+    </div>
+  </body>
+</html>
