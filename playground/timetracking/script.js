@@ -85,7 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  clearButton.addEventListener("click", clearTable);
+  clearButton.addEventListener("click", () => {
+    if (confirm("Are you sure you want to clear the table?")) {
+      clearTable();
+    }
+  });
 
   function saveTableData() {
     localStorage.setItem("timeTable", JSON.stringify(getTableData()));
