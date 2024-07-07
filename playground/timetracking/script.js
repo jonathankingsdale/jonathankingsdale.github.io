@@ -2,6 +2,13 @@
 
 const LOGGING_ENABLED = false;
 
+const categoryOptions = {
+  mainWork: "Main Work",
+  meeting: "Meeting",
+  admin: "Admin",
+  automation: "Automation",
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.getElementById("startButton");
   const stopButton = document.getElementById("stopButton");
@@ -169,24 +176,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createCategoryDropdown(selectedValue) {
     const select = document.createElement("select");
-    const options = [
-      { value: "mainWork", text: "Main Work" },
-      { value: "meeting", text: "Meeting" },
-      { value: "admin", text: "Admin" },
-      { value: "automation", text: "Automation" },
-    ];
 
-    options.forEach((option) => {
+    Object.entries(categoryOptions).forEach(([value, text]) => {
       const opt = document.createElement("option");
-      opt.value = option.value;
-      opt.textContent = option.text;
-      if (option.value === selectedValue) {
+      opt.value = value;
+      opt.textContent = text;
+      if (value === selectedValue) {
         opt.selected = true;
       }
       select.appendChild(opt);
     });
 
     return select;
+  }
+
+  function calculateCategoryTotals() {
+    const categoryTotals = {};
+
+    getTableData().forEach((row) => {
+      const start = Date.parse(`${row.date}T${row.startTime}`);
+      const end = Date.parse(`${row.date}T${row.endTime}`);
+      const category = categoryOptions[row.category];
+
+      if (!isNaN(start) && !isNaN(end)) {
+        const timeSpent = end - start;
+
+        if (!categoryTotals[category]) {
+          categoryTotals[category] = 0;
+        }
+        categoryTotals[category] += timeSpent;
+      }
+    });
+
+    return categoryTotals;
   }
 
   openChartButton.addEventListener("click", () => {
