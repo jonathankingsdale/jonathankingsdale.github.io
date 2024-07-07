@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     endCell.contentEditable = true;
 
     const categoryCell = newRow.insertCell(4);
-    categoryCell.textContent = endTime;
+    categoryCell.textContent = category;
     categoryCell.contentEditable = true;
 
     const noteCell = newRow.insertCell(5);
