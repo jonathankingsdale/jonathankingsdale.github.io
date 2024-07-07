@@ -37,3 +37,31 @@ td {
 th {
   background-color: #eee;
 }
+
+.narrow {
+  width: 10%;
+}
+
+.wide {
+  width: 50%;
+}
+
+select {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+}
+
+select:hover {
+  background-color: #e0e0e0;
+}
+
+select:focus {
+  border-color: #214974;
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}

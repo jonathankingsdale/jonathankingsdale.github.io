@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dayOfWeek: cells[1].textContent,
         startTime: cells[2].textContent,
         endTime: cells[3].textContent,
-        category: cells[4].textContent,
+        category: cells[4].getElementsByTagName("select")[0].value,
         note: cells[5].textContent,
       };
       tableData.push(row);
@@ -158,12 +158,33 @@ document.addEventListener("DOMContentLoaded", () => {
     endCell.contentEditable = true;
 
     const categoryCell = newRow.insertCell(4);
-    categoryCell.textContent = category;
-    categoryCell.contentEditable = true;
+    categoryCell.appendChild(createCategoryDropdown(category));
 
     const noteCell = newRow.insertCell(5);
     noteCell.textContent = note;
     noteCell.contentEditable = true;
+  }
+
+  function createCategoryDropdown(selectedValue) {
+    const select = document.createElement("select");
+    const options = [
+      { value: "mainWork", text: "Main Work" },
+      { value: "meeting", text: "Meeting" },
+      { value: "admin", text: "Admin" },
+      { value: "automation", text: "Automation" },
+    ];
+
+    options.forEach((option) => {
+      const opt = document.createElement("option");
+      opt.value = option.value;
+      opt.textContent = option.text;
+      if (option.value === selectedValue) {
+        opt.selected = true;
+      }
+      select.appendChild(opt);
+    });
+
+    return select;
   }
 
   // Save table data whenever content is edited
