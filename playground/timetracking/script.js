@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const category = categoryOptions[row.category];
 
       if (!isNaN(start) && !isNaN(end)) {
-        const timeSpent = end - start;
+        const timeSpent = (end - start) / 3_600_000;
 
         if (!categoryTotals[category]) {
           categoryTotals[category] = 0;
@@ -213,6 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   openChartButton.addEventListener("click", () => {
     chartModal.style.display = "block";
+    drawChart();
   });
 
   modalCloseButton.addEventListener("click", () => {
@@ -224,6 +225,29 @@ document.addEventListener("DOMContentLoaded", () => {
       chartModal.style.display = "none";
     }
   });
+
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    let data = new google.visualization.DataTable();
+    data.addColumn("string", "Category");
+    data.addColumn("number", "Total Hours");
+    data.addRows(
+      Object.entries(calculateCategoryTotals()).map(
+        ([category, totalHours]) => [category, totalHours]
+      )
+    );
+
+    const chart = new google.visualization.PieChart(
+      document.getElementById("piechart")
+    );
+
+    const options = {
+      pieHole: 0.4,
+    };
+    chart.draw(data, options);
+  }
 
   // Save table data whenever content is edited
   timeTable.addEventListener("input", saveTableData);
