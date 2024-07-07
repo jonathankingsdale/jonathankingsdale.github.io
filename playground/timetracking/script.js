@@ -120,10 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getTableData() {
-    const tableData = [];
-    for (let i = 0; i < timeTable.rows.length; i++) {
-      const cells = timeTable.rows[i].cells;
-      const row = {
+    return Array.from(timeTable.rows).map((row) => {
+      const cells = row.cells;
+      return {
         date: cells[0].textContent,
         dayOfWeek: cells[1].textContent,
         startTime: cells[2].textContent,
@@ -131,9 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category: cells[4].getElementsByTagName("select")[0].value,
         note: cells[5].textContent,
       };
-      tableData.push(row);
-    }
-    return tableData;
+    });
   }
 
   function updateButtonStates() {
