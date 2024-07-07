@@ -7,9 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const stopButton = document.getElementById("stopButton");
   const switchButton = document.getElementById("switchButton");
   const clearButton = document.getElementById("clearButton");
+  const openChartButton = document.getElementById("chartButton");
+
   const timeTable = document
     .getElementById("timeTable")
     .getElementsByTagName("tbody")[0];
+
+  const chartModal = document.getElementById("chartModal");
+  const modalCloseButton = document.getElementsByClassName("modalClose")[0];
 
   loadTableData();
   let hasStarted = getHasStarted();
@@ -186,6 +191,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return select;
   }
+
+  openChartButton.addEventListener("click", () => {
+    chartModal.style.display = "block";
+  });
+
+  modalCloseButton.addEventListener("click", () => {
+    chartModal.style.display = "none";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target == chartModal) {
+      chartModal.style.display = "none";
+    }
+  });
 
   // Save table data whenever content is edited
   timeTable.addEventListener("input", saveTableData);
