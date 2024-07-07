@@ -1,3 +1,5 @@
+"use strict";
+
 const LOGGING_ENABLED = false;
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,14 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function startTimer() {
     hasStarted = true;
     const { date, dayOfWeek, time } = getCurrentDateTime();
-    const newRow = timeTable.insertRow();
-    newRow.insertCell(0).textContent = date;
-    newRow.insertCell(1).textContent = dayOfWeek;
-    newRow.insertCell(2).textContent = time;
-    newRow.insertCell(3).textContent = "";
-    newRow.insertCell(4).textContent = "";
-    newRow.insertCell(5).textContent = "";
-    makeCellsEditable(newRow);
+    addNewRow(date, dayOfWeek, time, "", "", "");
     saveTableData();
   }
 
@@ -53,12 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
     lastRow.cells[3].textContent = endTime;
     hasStarted = false;
     saveTableData();
-  }
-
-  function makeCellsEditable(row) {
-    for (let i = 0; i < row.cells.length; i++) {
-      row.cells[i].contentEditable = true;
-    }
   }
 
   startButton.addEventListener("click", () => {
@@ -111,14 +100,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const tableData = JSON.parse(storedData);
       tableData.forEach((row) => {
-        const newRow = timeTable.insertRow();
-        newRow.insertCell(0).textContent = row.date;
-        newRow.insertCell(1).textContent = row.dayOfWeek;
-        newRow.insertCell(2).textContent = row.startTime;
-        newRow.insertCell(3).textContent = row.endTime;
-        newRow.insertCell(4).textContent = row.category;
-        newRow.insertCell(5).textContent = row.note;
-        makeCellsEditable(newRow);
+        addNewRow(
+          row.date,
+          row.dayOfWeek,
+          row.startTime,
+          row.endTime,
+          row.category,
+          row.note
+        );
       });
     } else {
       if (LOGGING_ENABLED) console.log("No table found in storage.");
@@ -147,6 +136,34 @@ document.addEventListener("DOMContentLoaded", () => {
     stopButton.disabled = !hasStarted;
     switchButton.disabled = !hasStarted;
     clearButton.disabled = timeTable.rows.length === 0;
+  }
+
+  function addNewRow(date, dayOfWeek, startTime, endTime, category, note) {
+    const newRow = timeTable.insertRow();
+
+    const dateCell = newRow.insertCell(0);
+    dateCell.textContent = date;
+    dateCell.contentEditable = true;
+
+    const dayOfWeekCell = newRow.insertCell(1);
+    dayOfWeekCell.textContent = dayOfWeek;
+    dayOfWeekCell.contentEditable = true;
+
+    const startCell = newRow.insertCell(2);
+    startCell.textContent = startTime;
+    startCell.contentEditable = true;
+
+    const endCell = newRow.insertCell(3);
+    endCell.textContent = endTime;
+    endCell.contentEditable = true;
+
+    const categoryCell = newRow.insertCell(4);
+    categoryCell.textContent = endTime;
+    categoryCell.contentEditable = true;
+
+    const noteCell = newRow.insertCell(5);
+    noteCell.textContent = note;
+    noteCell.contentEditable = true;
   }
 
   // Save table data whenever content is edited
