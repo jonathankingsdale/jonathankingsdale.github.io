@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTableData();
   let hasStarted = getHasStarted();
   updateButtonStates();
+  updateTotalTimeWorked();
 
   function getCurrentDateTime() {
     const now = new Date();
@@ -58,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function endTimer(endTime) {
     const lastRow = timeTable.rows[timeTable.rows.length - 1];
     lastRow.cells[3].textContent = endTime;
+    updateDuration(lastRow);
     hasStarted = false;
     saveTableData();
   }
@@ -66,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!hasStarted) {
       startTimer();
       updateButtonStates();
+      updateTotalTimeWorked();
     }
   });
 
@@ -74,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const { time } = getCurrentDateTime();
       endTimer(time);
       updateButtonStates();
+      updateTotalTimeWorked();
     }
   });
 
@@ -83,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
       endTimer(time);
       startTimer();
       updateButtonStates();
+      updateTotalTimeWorked();
     }
   });
 
@@ -103,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     localStorage.removeItem("timeTable");
     updateButtonStates();
+    updateTotalTimeWorked();
   }
 
   function loadTableData() {
@@ -134,8 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
         dayOfWeek: cells[1].textContent,
         startTime: cells[2].textContent,
         endTime: cells[3].textContent,
-        category: cells[4].getElementsByTagName("select")[0].value,
-        note: cells[5].textContent,
+        category: cells[5].getElementsByTagName("select")[0].value,
+        note: cells[6].textContent,
       };
     });
   }
@@ -152,26 +158,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const dateCell = newRow.insertCell(0);
     dateCell.textContent = date;
-    dateCell.contentEditable = true;
 
     const dayOfWeekCell = newRow.insertCell(1);
     dayOfWeekCell.textContent = dayOfWeek;
-    dayOfWeekCell.contentEditable = true;
 
     const startCell = newRow.insertCell(2);
     startCell.textContent = startTime;
     startCell.contentEditable = true;
+    startCell.addEventListener("input", () => updateDuration(newRow));
 
     const endCell = newRow.insertCell(3);
     endCell.textContent = endTime;
     endCell.contentEditable = true;
+    endCell.addEventListener("input", () => updateDuration(newRow));
 
-    const categoryCell = newRow.insertCell(4);
+    const durationCell = newRow.insertCell(4);
+    durationCell.textContent = calculateDuration(startTime, endTime, date);
+
+    const categoryCell = newRow.insertCell(5);
     categoryCell.appendChild(createCategoryDropdown(category));
 
-    const noteCell = newRow.insertCell(5);
+    const noteCell = newRow.insertCell(6);
     noteCell.textContent = note;
     noteCell.contentEditable = true;
+  }
+
+  function msToHHMMSS(ms) {
+    return new Date(ms).toISOString().slice(11, 19); // HH:MM:SS
+  }
+
+  function calculateDuration(startTime, endTime, date) {
+    const start = Date.parse(`${date}T${startTime}`);
+    const end = Date.parse(`${date}T${endTime}`);
+
+    if (isNaN(start) || isNaN(end)) return "";
+
+    return msToHHMMSS(end - start);
+  }
+
+  function updateDuration(row) {
+    const date = row.cells[0].textContent;
+    const startTime = row.cells[2].textContent;
+    const endTime = row.cells[3].textContent;
+    row.cells[4].textContent = calculateDuration(startTime, endTime, date);
+    saveTableData();
   }
 
   function createCategoryDropdown(selectedValue) {
@@ -209,6 +239,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     return categoryTotals;
+  }
+
+  function calculateDayTotals() {
+    const dayTotals = {};
+
+    getTableData().forEach((row) => {
+      const start = Date.parse(`${row.date}T${row.startTime}`);
+      const end = Date.parse(`${row.date}T${row.endTime}`);
+
+      if (!isNaN(start) && !isNaN(end)) {
+        const timeSpent = end - start;
+
+        if (!dayTotals[row.dayOfWeek]) {
+          dayTotals[row.dayOfWeek] = 0;
+        }
+        dayTotals[row.dayOfWeek] += timeSpent;
+      }
+    });
+
+    return dayTotals;
+  }
+
+  function updateTotalTimeWorked() {
+    const totals = calculateDayTotals();
+    const totalTimeList = document.getElementById("totalTimeList");
+    totalTimeList.innerHTML = ""; // Clear the list
+
+    Object.entries(totals).forEach(([day, total]) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${day}: ${msToHHMMSS(total)}`;
+      totalTimeList.appendChild(listItem);
+    });
   }
 
   openChartButton.addEventListener("click", () => {
@@ -250,5 +312,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Save table data whenever content is edited
-  timeTable.addEventListener("input", saveTableData);
+  timeTable.addEventListener("input", () => {
+    saveTableData();
+    updateTotalTimeWorked();
+  });
 });

@@ -108,3 +108,31 @@ select:focus {
   width: 100%; /* Ensure chart fills its container */
   height: 400px; /* Set initial height for the chart */
 }
+
+#totalTimeWorked {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensure it stays on top */
+}
+
+#totalTimeWorked h3 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+#totalTimeList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#totalTimeList li {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
