@@ -15,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const switchButton = document.getElementById("switchButton");
   const clearButton = document.getElementById("clearButton");
   const openChartButton = document.getElementById("chartButton");
+  const downloadButton = document.getElementById("downloadButton");
+  const triggerUploadButton = document.getElementById("triggerUploadButton");
+  const uploadButton = document.getElementById("uploadButton");
 
   const timeTable = document
     .getElementById("timeTable")
@@ -150,7 +153,12 @@ document.addEventListener("DOMContentLoaded", () => {
     startButton.disabled = hasStarted;
     stopButton.disabled = !hasStarted;
     switchButton.disabled = !hasStarted;
-    clearButton.disabled = timeTable.rows.length === 0;
+
+    const isEmpty = timeTable.rows.length == 0;
+
+    clearButton.disabled = isEmpty;
+    openChartButton.disabled = isEmpty;
+    downloadButton.disabled = isEmpty;
   }
 
   function addNewRow(date, dayOfWeek, startTime, endTime, category, note) {
@@ -314,6 +322,52 @@ document.addEventListener("DOMContentLoaded", () => {
   // Save table data whenever content is edited
   timeTable.addEventListener("input", () => {
     saveTableData();
+    hasStarted = getHasStarted();
+    updateButtonStates();
     updateTotalTimeWorked();
+  });
+
+  downloadButton.addEventListener("click", () => {
+    const data = JSON.stringify(getTableData(), null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "timesheet.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  uploadButton.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const contents = e.target.result;
+        const data = JSON.parse(contents);
+        clearTable();
+        data.forEach((row) => {
+          addNewRow(
+            row.date,
+            row.dayOfWeek,
+            row.startTime,
+            row.endTime,
+            row.category,
+            row.note
+          );
+        });
+        saveTableData();
+        hasStarted = getHasStarted();
+        updateButtonStates();
+        updateTotalTimeWorked();
+      };
+      reader.readAsText(file);
+    }
+  });
+
+  triggerUploadButton.addEventListener("click", () => {
+    uploadButton.click();
   });
 });
