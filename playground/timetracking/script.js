@@ -358,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
             row.note
           );
         });
+        uploadButton.value = null;
         saveTableData();
         hasStarted = getHasStarted();
         updateButtonStates();
