@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>Local Time Tracker</h1>
-    <div>
+    <div class="sticky-banner">
       <button id="startButton">Start</button>
       <button id="stopButton">Stop</button>
       <button id="switchButton">Switch</button>
@@ -17,10 +16,10 @@
       <button id="downloadButton">Download Data</button>
       <button id="triggerUploadButton">Upload Data</button>
       <input type="file" id="uploadButton" style="display: none" />
-    </div>
-    <div id="totalTimeWorked">
-      <h3>Total Time Worked Per Day</h3>
-      <ul id="totalTimeList"></ul>
+      <div id="totalTimeWorked">
+        <h3>Total Time Worked Per Day</h3>
+        <ul id="totalTimeList"></ul>
+      </div>
     </div>
     <table id="timeTable">
       <thead>

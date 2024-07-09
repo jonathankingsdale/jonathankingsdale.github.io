@@ -5,6 +5,17 @@ body {
   background-color: #f0f0f0;
 }
 
+.sticky-banner {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
 h1 {
   text-align: center;
 }
@@ -23,7 +34,7 @@ button {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 th,
