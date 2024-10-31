@@ -9,6 +9,9 @@ const editor = CodeMirror.fromTextArea(document.getElementById("codeInput"), {
 });
 
 const onChange = async () => {
+  const code = editor.getValue().trim();
+  localStorage.setItem("savedCode", code);
+
   // Create a new worker
   const worker = new Worker("worker.js");
   const showErrors = showErrorsCheckbox.checked;
@@ -32,12 +35,19 @@ const onChange = async () => {
   };
 
   // Start the worker with the user's code
-  worker.postMessage({ code: editor.getValue().trim() });
+  worker.postMessage({ code });
 };
 
 // Listen for changes in CodeMirror editor
 editor.on("change", onChange);
 showErrorsCheckbox.addEventListener("change", onChange);
+
+window.onload = function () {
+  const savedCode = localStorage.getItem("savedCode");
+  if (savedCode) {
+    editor.setValue(savedCode);
+  }
+};
 
 // Function to format code
 function formatCode() {
