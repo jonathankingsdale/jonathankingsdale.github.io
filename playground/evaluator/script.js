@@ -42,9 +42,26 @@ const onChange = async () => {
 editor.on("change", onChange);
 showErrorsCheckbox.addEventListener("change", onChange);
 
+// Load code from URL parameter or local storage on page load
 window.onload = function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const codeFromUrl = urlParams.get("code");
   const savedCode = localStorage.getItem("savedCode");
-  if (savedCode) {
+
+  if (codeFromUrl) {
+    try {
+      // Decode from Base64 and set in editor
+      const decodedCode = atob(codeFromUrl);
+      editor.setValue(decodedCode);
+
+      // Optionally save to local storage for persistence
+      localStorage.setItem("savedCode", decodedCode);
+    } catch (e) {
+      console.error("Failed to decode code from URL:", e);
+      output.textContent = "Error: Invalid code in URL";
+    }
+  } else if (savedCode) {
+    // Load saved code from local storage if no URL code is present
     editor.setValue(savedCode);
   }
 };
@@ -62,4 +79,21 @@ function formatCode() {
     console.error("Formatting error:", e);
     output.textContent = "Error: Could not format code.";
   }
+}
+
+function generateShareableLink() {
+  const code = editor.getValue();
+  const encodedCode = btoa(code); // Base64 encode the code
+  const shareableUrl = `${window.location.origin}${window.location.pathname}?code=${encodedCode}`;
+
+  // Copy the URL to the clipboard
+  navigator.clipboard
+    .writeText(shareableUrl)
+    .then(() => {
+      alert("Shareable URL copied to clipboard!");
+    })
+    .catch((err) => {
+      console.error("Failed to copy URL:", err);
+      alert("Failed to copy URL. Please try again.");
+    });
 }
