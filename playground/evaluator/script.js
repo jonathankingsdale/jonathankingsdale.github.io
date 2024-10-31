@@ -8,18 +8,31 @@ const editor = CodeMirror.fromTextArea(document.getElementById("codeInput"), {
   autoCloseBrackets: true,
 });
 
-const onChange = () => {
-  try {
-    const code = editor.getValue().trim();
-    const lines = code.split("\n");
-    const lastLine = lines.pop();
-    const wrappedCode = [...lines, `return ${lastLine}`].join("\n");
-    output.textContent = new Function(wrappedCode)();
-  } catch (e) {
-    output.textContent = showErrorsCheckbox.checked
-      ? "Error: " + e.message
-      : "";
-  }
+const onChange = async () => {
+  // Create a new worker
+  const worker = new Worker("worker.js");
+  const showErrors = showErrorsCheckbox.checked;
+
+  // Set up a timeout to terminate the worker if it takes too long.
+  const timeoutId = setTimeout(() => {
+    worker.terminate();
+    output.textContent = showErrors ? "Execution timed out" : "";
+  }, 3000); // 3 seconds
+
+  // Handle messages from the worker
+  worker.onmessage = (event) => {
+    clearTimeout(timeoutId); // Clear timeout on successful completion
+
+    const { result, error } = event.data;
+    if (error && showErrors) {
+      output.textContent = "Error: " + error;
+    } else if (result !== undefined) {
+      output.textContent = result;
+    }
+  };
+
+  // Start the worker with the user's code
+  worker.postMessage({ code: editor.getValue().trim() });
 };
 
 // Listen for changes in CodeMirror editor
