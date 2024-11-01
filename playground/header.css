@@ -1,0 +1,59 @@
+/* Header styles */
+.app-header {
+  background: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.header-link {
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.header-link:hover {
+  background: #f5f7fa;
+}
+
+.header-title {
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* Add padding to body to account for fixed header */
+body {
+  padding-top: 4rem;
+}
+
+@media (max-width: 600px) {
+  .app-header {
+    padding: 1rem;
+  }
+
+  .header-title {
+    font-size: 1rem;
+  }
+}
