@@ -17,14 +17,22 @@ function convertToTypst(text) {
       processedLines.push(`  #strong[${formattedLines[i]}]`);
       // Remaining lines of first verse
       for (let j = 1; j < 4 && i + j < formattedLines.length; j++) {
-        processedLines.push(`  \\ #h(0.5em) ${formattedLines[i + j]}`);
+        if (j % 2 === 0) {
+          processedLines.push(`  \\ ${formattedLines[i + j]}`);
+        } else {
+          processedLines.push(`  \\ #h(0.5em) ${formattedLines[i + j]}`);
+        }
       }
     } else {
       // Other verses
       processedLines.push(`  \\ ${Math.floor(i / 4) + 1} ${formattedLines[i]}`);
       // Remaining lines of the verse
       for (let j = 1; j < 4 && i + j < formattedLines.length; j++) {
-        processedLines.push(`  \\ #h(0.5em) ${formattedLines[i + j]}`);
+        if (j % 2 === 0) {
+          processedLines.push(`  \\ ${formattedLines[i + j]}`);
+        } else {
+          processedLines.push(`  \\ #h(0.5em) ${formattedLines[i + j]}`);
+        }
       }
     }
     // Add blank line between verses
@@ -38,6 +46,8 @@ function convertToTypst(text) {
 
   output += processedLines.join("\n");
   output += "\n]\n\n#utils.footer(author, year)";
+
+  output = output.replaceAll("’", "'");
 
   return output;
 }
