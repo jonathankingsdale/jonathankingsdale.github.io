@@ -1,55 +1,49 @@
 // Function to convert text to Typst format
 function convertToTypst(text) {
-  const lines = text.split("\n");
   let output = `#import "@preview/droplet:0.3.1": dropcap\n#import "../utils.typ"\n\n`;
   output += `#let number = 1\n#let header = ""\n#let author = ""\n#let year = ""\n\n`;
   output += `#utils.header(number, header)\n\n`;
-  output += `#set align(left)\n#dropcap(gap: -2pt)[\n`;
 
-  // Process each line
-  let formattedLines = lines.map((line) => line.trim()).filter((line) => line); // Remove empty lines and trim
+  let converted = generateHymn(text);
 
-  // Add verse numbers and format lines
-  let processedLines = [];
-  for (let i = 0; i < formattedLines.length; i += 4) {
-    if (i === 0) {
-      // First verse, first line gets special formatting
-      processedLines.push(`  #strong[${formattedLines[i]}]`);
-      // Remaining lines of first verse
-      for (let j = 1; j < 4 && i + j < formattedLines.length; j++) {
-        if (j % 2 === 0) {
-          processedLines.push(`  \\ ${formattedLines[i + j]}`);
-        } else {
-          processedLines.push(`  \\ #h(0.5em) ${formattedLines[i + j]}`);
-        }
-      }
-    } else {
-      // Other verses
-      processedLines.push(`  \\ ${Math.floor(i / 4) + 1} ${formattedLines[i]}`);
-      // Remaining lines of the verse
-      for (let j = 1; j < 4 && i + j < formattedLines.length; j++) {
-        if (j % 2 === 0) {
-          processedLines.push(`  \\ ${formattedLines[i + j]}`);
-        } else {
-          processedLines.push(`  \\ #h(0.5em) ${formattedLines[i + j]}`);
-        }
-      }
-    }
-    // Add blank line between verses
-    processedLines.push("  \\");
-  }
+  output += converted;
+  output += "\n\n#utils.footer(author, year)";
 
-  // Remove the last empty line if it exists
-  if (processedLines[processedLines.length - 1] === "  \\") {
-    processedLines.pop();
-  }
-
-  output += processedLines.join("\n");
-  output += "\n]\n\n#utils.footer(author, year)";
-
-  output = output.replaceAll("’", "'");
+  output = output
+    .replaceAll("’", "'")
+    .replaceAll("“", '"')
+    .replaceAll("”", '"')
+    .replaceAll("`", '"')
+    .replaceAll("—", "-");
 
   return output;
+}
+
+function generateHymn(input) {
+  const verses = input.trim().split(/\n\s*\n/);
+
+  return verses
+    .map((verse, verseIndex) => {
+      const lines = verse.split("\n").map((line) => line.trim());
+
+      const otherLines = lines.slice(1).map((line, lineIndex) => {
+        if (lineIndex % 2 === 0) {
+          return `  \\ #h(0.5em) ${line}\n`;
+        } else {
+          return `  \\ ${line}\n`;
+        }
+      });
+
+      if (verseIndex === 0) {
+        return `#dropcap(gap: -2pt)[\n  #strong[${lines[0]}]\n${otherLines.join(
+          ""
+        )}]`;
+      }
+      return `#utils.verse(\n  "${verseIndex + 1}",\n  [\n    ${
+        lines[0]
+      }\n${otherLines.map((line) => "  " + line).join("")}  ],\n)`;
+    })
+    .join("\n\n");
 }
 
 // Function to generate filename from first line
