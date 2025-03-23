@@ -2,7 +2,7 @@
 function convertToTypst(text) {
   const lines = text.split("\n");
   let output = `#import "@preview/droplet:0.3.1": dropcap\n#import "../utils.typ"\n\n`;
-  output += `#let number = 1\n#let header = "N/A"\n#let author = "N/A"\n#let year = "N/A"\n\n`;
+  output += `#let number = 1\n#let header = ""\n#let author = ""\n#let year = ""\n\n`;
   output += `#utils.header(number, header)\n\n`;
   output += `#set align(left)\n#dropcap(gap: -2pt)[\n`;
 
