@@ -26,27 +26,32 @@ function generateHymn(input, isChorus) {
     .map((block, index) => {
       const lines = block.split("\n").map((line) => line.trim());
 
-      if (isChorus && index === 1) {
-        // Apply utils.chorus to the second block
-        return `#utils.chorus([\n${lines
-          .map((line) => `  ${line}`)
-          .join("\n")}\n])`;
-      }
+      const emph = (line) => {
+        if (isChorus && index === 1) {
+          return `#emph[${line}]`;
+        }
+        return line;
+      };
 
       const otherLines = lines.slice(1).map((line, lineIndex) => {
         if (lineIndex % 2 === 0) {
-          return `  \\ #h(0.5em) ${line}\n`;
+          return `  \\ #h(0.5em) ${emph(line)}\n`;
         } else {
-          return `  \\ ${line}\n`;
+          return `  \\ ${emph(line)}\n`;
         }
       });
-
-      const verseIndex = isChorus && index > 1 ? index : index + 1;
 
       if (index === 0) {
         return `#dropcap(gap: -2pt)[\n  #strong[${lines[0]}]\n${otherLines.join(
           ""
         )}]`;
+      }
+      const verseIndex = isChorus && index > 1 ? index : index + 1;
+
+      if (isChorus && index === 1) {
+        return `#utils.chorus(\n  [\n    ${lines[0]}\n${otherLines
+          .map((line) => "  " + line)
+          .join("")}  ],\n)`;
       }
 
       return `#utils.verse(\n  "${verseIndex}",\n  [\n    ${
