@@ -57,6 +57,14 @@ textarea:focus {
   padding: 10px 0;
 }
 
+.button-container label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #333;
+}
+
 button {
   background-color: #646cff;
   color: white;

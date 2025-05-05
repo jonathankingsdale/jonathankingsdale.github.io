@@ -1,10 +1,10 @@
 // Function to convert text to Typst format
-function convertToTypst(text) {
+function convertToTypst(text, isChorus) {
   let output = `#import "@preview/droplet:0.3.1": dropcap\n#import "../utils.typ"\n\n`;
   output += `#let number = 1\n#let header = ""\n#let author = ""\n#let year = ""\n\n`;
   output += `#utils.header(number, header)\n\n`;
 
-  let converted = generateHymn(text);
+  let converted = generateHymn(text, isChorus);
 
   output += converted;
   output += "\n\n#utils.footer(author, year)";
@@ -19,12 +19,19 @@ function convertToTypst(text) {
   return output;
 }
 
-function generateHymn(input) {
-  const verses = input.trim().split(/\n\s*\n/);
+function generateHymn(input, isChorus) {
+  const blocks = input.trim().split(/\n\s*\n/);
 
-  return verses
-    .map((verse, verseIndex) => {
-      const lines = verse.split("\n").map((line) => line.trim());
+  return blocks
+    .map((block, index) => {
+      const lines = block.split("\n").map((line) => line.trim());
+
+      if (isChorus && index === 1) {
+        // Apply utils.chorus to the second block
+        return `#utils.chorus([\n${lines
+          .map((line) => `  ${line}`)
+          .join("\n")}\n])`;
+      }
 
       const otherLines = lines.slice(1).map((line, lineIndex) => {
         if (lineIndex % 2 === 0) {
@@ -34,12 +41,15 @@ function generateHymn(input) {
         }
       });
 
-      if (verseIndex === 0) {
+      const verseIndex = isChorus && index > 1 ? index : index + 1;
+
+      if (index === 0) {
         return `#dropcap(gap: -2pt)[\n  #strong[${lines[0]}]\n${otherLines.join(
           ""
         )}]`;
       }
-      return `#utils.verse(\n  "${verseIndex + 1}",\n  [\n    ${
+
+      return `#utils.verse(\n  "${verseIndex}",\n  [\n    ${
         lines[0]
       }\n${otherLines.map((line) => "  " + line).join("")}  ],\n)`;
     })
@@ -79,7 +89,8 @@ const downloadBtn = document.getElementById("downloadBtn");
 // Convert button click handler
 convertBtn.addEventListener("click", () => {
   const text = inputText.value;
-  const converted = convertToTypst(text);
+  const isChorus = document.getElementById("chorusCheckbox").checked;
+  const converted = convertToTypst(text, isChorus);
   outputText.value = converted;
 });
 
