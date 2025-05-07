@@ -11,10 +11,12 @@ function convertToTypst(text, isChorus) {
 
   output = output
     .replaceAll("’", "'")
+    .replaceAll("‘", "'")
     .replaceAll("“", '"')
     .replaceAll("”", '"')
     .replaceAll("`", '"')
-    .replaceAll("—", "-");
+    .replaceAll("—", "-")
+    .replaceAll("–", "-");
 
   return output;
 }
