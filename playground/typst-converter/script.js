@@ -49,7 +49,7 @@ function generateHymn(input, isChorus) {
       const verseIndex = isChorus && index > 1 ? index : index + 1;
 
       if (isChorus && index === 1) {
-        return `#utils.chorus(\n  [\n    ${lines[0]}\n${otherLines
+        return `#utils.chorus(\n  [\n    ${emph(lines[0])}\n${otherLines
           .map((line) => "  " + line)
           .join("")}  ],\n)`;
       }
