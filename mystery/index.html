@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BelowSuspicion Case File</title>
+    <link rel="shortcut icon" type="image/ico" href="favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="timer">--:--</div>
+    <h1>BelowSuspicion: Decode the Truth</h1>
+    <div id="final-answer"></div>
+    <a id="recovered-email"
+      ><button>Download the recovered email and begin!</button></a
+    >
+    <div class="container hidden">
+      <dialog>
+        <p></p>
+        <form method="dialog">
+          <button>OK</button>
+        </form>
+      </dialog>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+        <div class="progress-text">0% Complete</div>
+      </div>
+      <div
+        class="clue"
+        data-clue="clue1"
+        data-answer="ethics@belowsuspicion.com"
+      >
+        <p>
+          <strong>Clue 1:</strong> What email address did Barc Baiffret send a
+          message to?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue2" data-answer="bullying">
+        <p>
+          <strong>Clue 2:</strong> What was the reason for the HR complaint that
+          Mark Runner filed against Barc Baiffret?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue3" data-answer="greatness">
+        <p>
+          <strong>Clue 3:</strong> What is the hidden word on the crossword?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue4" data-answer="blsp">
+        <p>
+          <strong>Clue 4:</strong> What is the ticker for the company being
+          acquired?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue5" data-answer="www.cypher.tech">
+        <p>
+          <strong>Clue 5:</strong> Which unusual website was accessed from a
+          work laptop?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue6" data-answer="letmein">
+        <p>
+          <strong>Clue 6:</strong> What is the password for the suspicious
+          account?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue7" data-answer="cyanide">
+        <p><strong>Clue 7:</strong> What chemical is missing from the lab?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue8" data-answer="2578">
+        <p>
+          <strong>Clue 8:</strong> What numeric value indicates a stable
+          chemical reaction?
+        </p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+
+      <div class="clue" data-clue="clue9" data-answer="blood thinner">
+        <p><strong>Clue 9:</strong> Why is the missing chemical dangerous?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+    </div>
+
+    <div id="final-questions" class="hidden">
+      <h2>Now solve the mystery...who killed Barc Baiffret?</h2>
+      <div class="final-clue" data-clue="clue10">
+        <p>Who was the murderer?</p>
+        <input id="murderer" type="text" placeholder="Enter answer..." />
+      </div>
+      <div class="final-clue" data-clue="clue11">
+        <p>What did they use to do it?</p>
+        <input id="means" type="text" placeholder="Enter answer..." />
+      </div>
+      <div class="final-clue" data-clue="clue12">
+        <p>What were they trying to cover up?</p>
+        <input id="motive" type="text" placeholder="Enter answer..." />
+      </div>
+      <div id="final-questions-submit-container">
+        <button id="final-questions-submit">Submit</button>
+        <p id="wrong-final-answer" class="hidden">
+          Unfortunately that's not correct! Perhaps you missed something?
+        </p>
+      </div>
+    </div>
+  </body>
+  <script src="./script.js" type="module"></script>
+</html>

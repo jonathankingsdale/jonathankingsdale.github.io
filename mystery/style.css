@@ -1,0 +1,205 @@
+html,
+body {
+  height: calc(100% - 2rem);
+  width: calc(100% - 2rem);
+}
+
+body {
+  font-family: "Courier New", monospace;
+  background-color: #0a0a0a;
+  color: #33ff33;
+  margin: 0;
+  padding: 2rem;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+  color: #33ff33;
+  font-family: "Arial Black", sans-serif;
+  text-shadow: 0 0 5px #33ff33;
+}
+
+a {
+  color: #33ff33;
+}
+
+dialog {
+  background: #111;
+  color: #3f3;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.terminal {
+  background: #111;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(51, 255, 51, 0.2);
+  border: 1px solid #33ff33;
+}
+
+.clue {
+  background: #111;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(51, 255, 51, 0.1);
+  border-left: 5px solid #444;
+  transition: all 0.3s ease;
+}
+
+.clue.correct {
+  border-left: 5px solid #33ff33;
+  box-shadow: 0 0 15px rgba(51, 255, 51, 0.4);
+}
+
+.clue.incorrect {
+  border-left: 5px solid #ff3333;
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+input[type="text"] {
+  padding: 0.8rem;
+  width: 80%;
+  margin-right: 0.5rem;
+  background: #222;
+  border: 1px solid #33ff33;
+  color: #33ff33;
+  font-family: "Courier New", monospace;
+}
+
+button {
+  padding: 0.8rem 1rem;
+  background: #222;
+  color: #33ff33;
+  border: 1px solid #33ff33;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: "Courier New", monospace;
+}
+
+button:hover {
+  background: #33ff33;
+  color: #000;
+}
+
+.progress-bar {
+  height: 20px;
+  background: #222;
+  border-radius: 10px;
+  margin: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #33ff33;
+  width: 0%;
+  transition: width 0.5s;
+}
+
+.progress-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.faded {
+  opacity: 0.4;
+  animation: fade 0.3s linear;
+}
+
+#recovered-email {
+  position: absolute;
+  top: calc(50% - 21px);
+  left: calc(50% - 173px);
+}
+
+#final-questions {
+  position: absolute;
+  top: calc(50% - 200px);
+  left: calc(50% - 372px);
+  background: #111;
+  padding: 3rem;
+  border-radius: 3rem;
+  animation: slidein 0.6s linear;
+}
+
+.final-clue > input {
+  width: 95%;
+}
+
+#final-questions-submit-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+#final-questions-submit {
+  font-size: 32px;
+  margin-top: 3rem;
+}
+
+#timer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #111;
+  border: 2px solid #33ff33;
+  padding: 10px 20px;
+  font-size: 24px;
+  border-radius: 5px;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.4;
+  }
+}
+
+@keyframes slidein {
+  0% {
+    top: -999px;
+  }
+
+  100% {
+    top: calc(50% - 200px);
+  }
+}
