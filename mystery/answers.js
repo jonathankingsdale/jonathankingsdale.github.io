@@ -1,1 +1,101 @@
-export default {"clue1":[{"salt":"umIlhJ8J3NXWVQLQ2eQHHg==","iv":"drTAtkUy3/lh7OOG","cipher":"muqaRY4CD0fkoM+H/gBwHORAHQbkuZg="}],"clue2":[{"salt":"nS+jHrld4EeYacnr2z/YXA==","iv":"kR4c6da5KeAjvH5C","cipher":"J9a212Nbm6eclsHI48zfWlJs8H4BuLM="}],"clue3":[{"salt":"IcDyrroZ5mYkNWg7kbi7cQ==","iv":"I59D2dXrbQTXWWew","cipher":"5hpvs9ySaHXZmrvNrdipxzf4UQm8KXQ="}],"clue4":[{"salt":"oFSA+a5n3eM7v4Of6o6ygw==","iv":"0xrgU+z8dAe+qmXe","cipher":"1BIzh9RPAic6aZgQAZ1fGjGZ0tuBq0U="}],"clue5":[{"salt":"kspIUq1r5OUbmTeYghdauQ==","iv":"FUl8VvyuIVcRCpnk","cipher":"cWx8fL8Wj+7Am8Y21Vtz55TPxS6RKso="},{"salt":"e2dCTzUaDDVWrcvntzc/+w==","iv":"cN0zm7DyZm5xLSJ8","cipher":"YUMl++Txe4/PsuB6OHZ5cdS1BhcWr4Y="},{"salt":"mmWIGzHUv8qfROEFZ52xAg==","iv":"+lzgCc8FNXI+ZH99","cipher":"nUmvb0oMCQkxNteYSYX49MVx+W5EwNg="}],"clue6":[{"salt":"KIbsrQLTrdPpM3ddZkqZmg==","iv":"wr/4w54jbWDsmhrg","cipher":"pN9eWIBeFTrDX4Prx0d+0GF17afjyEo="}],"clue7":[{"salt":"JPgLlq9WgseFl4GH5XxzGQ==","iv":"8zrTbs13AkFjb7HP","cipher":"pZxkAPGt4PZMD5ohlsSO00yDXhcCV+I="}],"clue8":[{"salt":"7FYV+fsp8X/S6lDxnNdztw==","iv":"BGoc0z7lnAWlLswl","cipher":"+3mF+cBJwlzfCZj53cZ3NPDGY+9u79g="}],"clue9":[{"salt":"SUtzGM4tGZ2umj2aB0p52w==","iv":"K80ZUx6A89XIFQg9","cipher":"Yl+pTdJWZM4dx99ABZGNS2imumQE2ug="}],"clue10":[{"salt":"tEb+E+eOCt6Z7gIwJi9qLg==","iv":"wtpZBFQREIdt6/MU","cipher":"dLZynMY3AzfFIIZGqPKcAJRbYl1MeuA="},{"salt":"eGXEvW7i71jpOuBcjthdug==","iv":"oiRvFCPBkIarKpEO","cipher":"zipU2LzUJzIBfIvkJ/uPFfhY8LFIVbU="}],"clue11":[{"salt":"8JSusiX6hRMf81vg0WPLRg==","iv":"/dccPk4iIpGfhnex","cipher":"pJU2LxJy17tbyc6E3hGr6lsTWsGdEG0="}],"clue12":[{"salt":"BG6ma0jAOv9XgGKhQkkaaw==","iv":"ultI+YLqaCoABlXb","cipher":"CRViHFkhxZxfG9wZAZv4JIoX3P7eYEg="}]}
+export default {
+  clue1: [
+    {
+      salt: "umIlhJ8J3NXWVQLQ2eQHHg==",
+      iv: "drTAtkUy3/lh7OOG",
+      cipher: "muqaRY4CD0fkoM+H/gBwHORAHQbkuZg=",
+    },
+  ],
+  clue2: [
+    {
+      salt: "nS+jHrld4EeYacnr2z/YXA==",
+      iv: "kR4c6da5KeAjvH5C",
+      cipher: "J9a212Nbm6eclsHI48zfWlJs8H4BuLM=",
+    },
+  ],
+  clue3: [
+    {
+      salt: "IcDyrroZ5mYkNWg7kbi7cQ==",
+      iv: "I59D2dXrbQTXWWew",
+      cipher: "5hpvs9ySaHXZmrvNrdipxzf4UQm8KXQ=",
+    },
+  ],
+  clue4: [
+    {
+      salt: "oFSA+a5n3eM7v4Of6o6ygw==",
+      iv: "0xrgU+z8dAe+qmXe",
+      cipher: "1BIzh9RPAic6aZgQAZ1fGjGZ0tuBq0U=",
+    },
+  ],
+  clue5: [
+    {
+      salt: "kspIUq1r5OUbmTeYghdauQ==",
+      iv: "FUl8VvyuIVcRCpnk",
+      cipher: "cWx8fL8Wj+7Am8Y21Vtz55TPxS6RKso=",
+    },
+    {
+      salt: "e2dCTzUaDDVWrcvntzc/+w==",
+      iv: "cN0zm7DyZm5xLSJ8",
+      cipher: "YUMl++Txe4/PsuB6OHZ5cdS1BhcWr4Y=",
+    },
+    {
+      salt: "mmWIGzHUv8qfROEFZ52xAg==",
+      iv: "+lzgCc8FNXI+ZH99",
+      cipher: "nUmvb0oMCQkxNteYSYX49MVx+W5EwNg=",
+    },
+  ],
+  clue6: [
+    {
+      salt: "KIbsrQLTrdPpM3ddZkqZmg==",
+      iv: "wr/4w54jbWDsmhrg",
+      cipher: "pN9eWIBeFTrDX4Prx0d+0GF17afjyEo=",
+    },
+  ],
+  clue7: [
+    {
+      salt: "JPgLlq9WgseFl4GH5XxzGQ==",
+      iv: "8zrTbs13AkFjb7HP",
+      cipher: "pZxkAPGt4PZMD5ohlsSO00yDXhcCV+I=",
+    },
+  ],
+  clue8: [
+    {
+      salt: "7FYV+fsp8X/S6lDxnNdztw==",
+      iv: "BGoc0z7lnAWlLswl",
+      cipher: "+3mF+cBJwlzfCZj53cZ3NPDGY+9u79g=",
+    },
+  ],
+  clue9: [
+    {
+      salt: "SUtzGM4tGZ2umj2aB0p52w==",
+      iv: "K80ZUx6A89XIFQg9",
+      cipher: "Yl+pTdJWZM4dx99ABZGNS2imumQE2ug=",
+    },
+  ],
+  clue10: [
+    {
+      salt: "tEb+E+eOCt6Z7gIwJi9qLg==",
+      iv: "wtpZBFQREIdt6/MU",
+      cipher: "dLZynMY3AzfFIIZGqPKcAJRbYl1MeuA=",
+    },
+    {
+      salt: "eGXEvW7i71jpOuBcjthdug==",
+      iv: "oiRvFCPBkIarKpEO",
+      cipher: "zipU2LzUJzIBfIvkJ/uPFfhY8LFIVbU=",
+    },
+  ],
+  clue11: [
+    {
+      salt: "8JSusiX6hRMf81vg0WPLRg==",
+      iv: "/dccPk4iIpGfhnex",
+      cipher: "pJU2LxJy17tbyc6E3hGr6lsTWsGdEG0=",
+    },
+  ],
+  clue12: [
+    {
+      salt: "BG6ma0jAOv9XgGKhQkkaaw==",
+      iv: "ultI+YLqaCoABlXb",
+      cipher: "CRViHFkhxZxfG9wZAZv4JIoX3P7eYEg=",
+    },
+  ],
+};
