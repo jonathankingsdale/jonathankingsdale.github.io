@@ -60,9 +60,9 @@ clues.forEach((clue) => {
 document
   .getElementById("final-questions-submit")
   .addEventListener("click", async () => {
-    const murderer = document.getElementById("murderer").value;
-    const means = document.getElementById("means").value;
-    const motive = document.getElementById("motive").value;
+    const murderer = document.getElementById("murderer").value.trim().toLowerCase();
+    const means = document.getElementById("means").value.trim().toLowerCase();
+    const motive = document.getElementById("motive").value.trim().toLowerCase();
 
     const correct =
       (await checkPossibleAnswers("clue10", murderer)) &&
