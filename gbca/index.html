@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Secret Room Mystery</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div
+      id="timer"
+      style="
+        position: fixed;
+        top: 18px;
+        right: 32px;
+        font-size: 1.3em;
+        color: #185a9d;
+        font-weight: bold;
+        background: #fffbe7;
+        padding: 0.4em 1em;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px #43cea2aa;
+        z-index: 10;
+      "
+    >
+      --:--
+    </div>
+    <h1>Secret Room Mystery</h1>
+    <h3 class="creators">Grace Baptist Church Aberdeen Escape Room</h3>
+    <div class="container">
+      <dialog>
+        <p></p>
+        <form method="dialog">
+          <button>OK</button>
+        </form>
+      </dialog>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+        <div class="progress-text">0% Complete</div>
+      </div>
+      <div class="clue" data-clue="clue1" data-answer="1892">
+        <p><strong>Clue 1:</strong> What year was the church founded?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+      <div class="clue" data-clue="clue2" data-answer="fellowship hall">
+        <p><strong>Clue 2:</strong> What is the name of the main hall?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+      <div class="clue" data-clue="clue3" data-answer="bible">
+        <p><strong>Clue 3:</strong> What is hidden under the pulpit?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+      <div class="clue" data-clue="clue4" data-answer="red">
+        <p><strong>Clue 4:</strong> What color is the front door?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+      <div class="clue" data-clue="clue5" data-answer="grace">
+        <p><strong>Clue 5:</strong> What is the secret code word?</p>
+        <input type="text" placeholder="Enter answer..." />
+        <button>Submit</button>
+      </div>
+    </div>
+    <div id="completion-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Well done!</h2>
+        <p id="completion-time"></p>
+      </div>
+    </div>
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
