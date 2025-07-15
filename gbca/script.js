@@ -3,8 +3,8 @@ let solvedClues = 0;
 const clues = document.querySelectorAll(".clue");
 const totalClues = clues.length;
 
-// Timer logic
-let secondsElapsed = 0;
+// Timer logic with localStorage
+let secondsElapsed = parseInt(localStorage.getItem("gbca-timer")) || 0;
 const timerEl = document.getElementById("timer");
 function updateTimer() {
   const min = Math.floor(secondsElapsed / 60);
@@ -12,14 +12,29 @@ function updateTimer() {
   timerEl.textContent = `${min}:${sec}`;
 }
 updateTimer();
-const timerInterval = setInterval(() => {
+let timerInterval = setInterval(() => {
   secondsElapsed++;
+  localStorage.setItem("gbca-timer", secondsElapsed);
   updateTimer();
 }, 1000);
 
+// Restore answers from localStorage
+const savedAnswers = JSON.parse(localStorage.getItem("gbca-answers") || "{}");
 clues.forEach((clue) => {
+  const clueId = clue.getAttribute("data-clue");
   const input = clue.querySelector("input");
   const button = clue.querySelector("button");
+  if (savedAnswers[clueId]) {
+    input.value = savedAnswers[clueId].value;
+    if (savedAnswers[clueId].correct) {
+      clue.classList.add("correct");
+      input.disabled = true;
+      button.disabled = true;
+      clue.querySelectorAll(":not(:first-child)").forEach((e) => e.remove());
+      clue.innerHTML += `<b>Correct!</b>`;
+      solvedClues++;
+    }
+  }
   input.addEventListener("keypress", (evt) => {
     if (evt.key === "Enter") {
       checkAnswer(clue);
@@ -30,18 +45,23 @@ clues.forEach((clue) => {
 
 function checkAnswer(clue) {
   const input = clue.querySelector("input");
+  const button = clue.querySelector("button");
   if (input.disabled) return;
   const answers = clue
     .getAttribute("data-answer")
     .split(",")
     .map((a) => a.trim().toLowerCase());
   const userAnswer = input.value.trim().toLowerCase();
+  const clueId = clue.getAttribute("data-clue");
   if (answers.includes(userAnswer)) {
     clue.classList.remove("incorrect");
     clue.classList.add("correct");
     solvedClues++;
+    input.disabled = true;
+    button.disabled = true;
     clue.querySelectorAll(":not(:first-child)").forEach((e) => e.remove());
     clue.innerHTML += `<b>Correct!</b>`;
+    saveAnswer(clueId, userAnswer, true);
     updateProgress();
     if (solvedClues === totalClues) {
       clearInterval(timerInterval);
@@ -52,7 +72,14 @@ function checkAnswer(clue) {
     setTimeout(() => {
       clue.classList.remove("incorrect");
     }, 1000);
+    saveAnswer(clueId, userAnswer, false);
   }
+}
+
+function saveAnswer(clueId, value, correct) {
+  const answers = JSON.parse(localStorage.getItem("gbca-answers") || "{}");
+  answers[clueId] = { value, correct };
+  localStorage.setItem("gbca-answers", JSON.stringify(answers));
 }
 
 function updateProgress() {
@@ -74,5 +101,13 @@ function showCompletionModal() {
   ).textContent = `You completed the escape room in ${timeStr}!`;
   modal.classList.remove("hidden");
 }
+
+// Reset button logic
+const resetBtn = document.getElementById("reset-btn");
+resetBtn.addEventListener("click", () => {
+  localStorage.removeItem("gbca-answers");
+  localStorage.removeItem("gbca-timer");
+  location.reload();
+});
 
 updateProgress();
