@@ -2,13 +2,17 @@ html,
 body {
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 body {
+  min-height: 100vh;
+  min-width: 100vw;
   font-family: "Segoe UI", "Arial", sans-serif;
-  background: linear-gradient(135deg, #f8ffae 0%, #43cea2 100%);
-  color: #23272b;
-  margin: 0;
-  padding: 2rem;
+  background: linear-gradient(120deg, #23243a 0%, #2b5876 50%, #4e4376 100%) fixed;
+  background-size: cover;
+  color: #e3e3e3;
+  overflow-x: hidden;
 }
 .top-right-controls {
   position: fixed;
@@ -19,15 +23,166 @@ body {
   align-items: center;
   gap: 0.7em;
 }
+#reset-btn {
+  font-size: 1em;
+  padding: 0.4em 1.1em;
+  background: linear-gradient(90deg, #ff5f6d 0%, #ffc371 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffb3b3aa;
+  z-index: 11;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+#reset-btn:hover {
+  background: linear-gradient(90deg, #ffc371 0%, #ff5f6d 100%);
+  color: #23243a;
+  box-shadow: 0 4px 16px #ffb3b3cc;
+}
 #timer {
   font-size: 1.3em;
-  color: #185a9d;
+  color: #00eaff;
   font-weight: bold;
-  background: #fffbe7;
+  background: rgba(30, 34, 54, 0.85);
   padding: 0.4em 1em;
   border-radius: 8px;
-  box-shadow: 0 2px 8px #43cea2aa;
+  box-shadow: 0 2px 8px #00eaff55;
   z-index: 10;
+  letter-spacing: 1px;
+}
+h1,
+h2,
+h3 {
+  text-align: center;
+  color: #00eaff;
+  font-family: "Montserrat", "Arial Black", sans-serif;
+  text-shadow: 0 2px 16px #000a, 0 0 2px #00eaff;
+}
+.creators {
+  margin-top: -10px;
+  font-size: 1rem;
+  opacity: 0.85;
+  font-family: "Segoe UI", sans-serif;
+  color: #b2eaff;
+}
+.container {
+  max-width: 800px;
+  margin: 40px auto 0 auto;
+  background: rgba(34, 38, 54, 0.85);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 #000a, 0 1.5px 8px #00eaff33;
+  padding: 2.5em 2.5em 2.5em 2.5em;
+  backdrop-filter: blur(8px);
+}
+.progress-bar {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 8px;
+  margin-bottom: 1.5em;
+  height: 32px;
+  position: relative;
+  box-shadow: 0 2px 8px #00eaff33;
+  border: 1px solid #00eaff;
+  overflow: hidden;
+}
+.progress-fill {
+  background: linear-gradient(90deg, #00eaff 0%, #43cea2 100%);
+  height: 100%;
+  width: 0%;
+  border-radius: 8px 0 0 8px;
+  transition: width 0.4s cubic-bezier(0.4, 2, 0.6, 1);
+}
+.progress-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 8px #23243a;
+}
+.clue {
+  background: rgba(0, 234, 255, 0.08);
+  padding: 1.2em 1em 1.2em 1em;
+  margin: 1.2em 0;
+  border-radius: 12px;
+  border-left: 6px solid #00eaff;
+  box-shadow: 0 0 10px #00eaff33;
+  transition: all 0.3s cubic-bezier(0.4, 2, 0.6, 1);
+}
+.clue.correct {
+  border-left: 6px solid #43cea2;
+  box-shadow: 0 0 15px #43cea2aa;
+  background: rgba(67, 206, 162, 0.13);
+}
+.clue.incorrect {
+  border-left: 6px solid #ff5f6d;
+  animation: shake 0.5s;
+  background: rgba(255, 95, 109, 0.13);
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+input[type="text"] {
+  padding: 0.8em;
+  width: 70%;
+  margin-right: 0.5em;
+  background: rgba(255, 255, 255, 0.13);
+  border: 1.5px solid #00eaff;
+  color: #00eaff;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1em;
+  border-radius: 4px;
+  outline: none;
+  transition: border 0.2s, background 0.2s;
+}
+input[type="text"]:focus {
+  border: 1.5px solid #43cea2;
+  background: rgba(67, 206, 162, 0.08);
+}
+button {
+  padding: 0.8em 1.2em;
+  background: linear-gradient(90deg, #00eaff 0%, #43cea2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 0.5em;
+  box-shadow: 0 2px 8px #00eaff55;
+  transition: background 0.2s, color 0.2s;
+}
+button:hover {
+  background: linear-gradient(90deg, #43cea2 0%, #00eaff 100%);
+  color: #23243a;
+}
+.feedback {
+  display: block;
+  min-height: 1.2em;
+  font-size: 0.98em;
+  margin-top: 0.2em;
+}
+.feedback.correct {
+  color: #43cea2;
+  font-weight: bold;
+}
+.feedback.incorrect {
+  color: #ff5f6d;
+  font-weight: bold;
 }
 .modal {
   position: fixed;
@@ -45,158 +200,18 @@ body {
   display: none;
 }
 .modal-content {
-  background: #fffbe7;
-  padding: 2em 3em;
-  border-radius: 10px;
-  text-align: center;
-  color: #185a9d;
-  box-shadow: 0 4px 24px #43cea2aa;
-}
-h1,
-h2,
-h3 {
-  text-align: center;
-  color: #2d3a4b;
-  font-family: "Arial Black", sans-serif;
-  text-shadow: 0 0 8px #fff7, 0 2px 8px #43cea2;
-}
-.creators {
-  margin-top: -10px;
-  font-size: 1rem;
-  opacity: 0.85;
-  font-family: "Segoe UI", sans-serif;
-  color: #43cea2;
-}
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(34, 38, 54, 0.97);
+  color: #00eaff;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(67, 206, 162, 0.18);
-  padding: 2em 2.5em 2.5em 2.5em;
-}
-.progress-bar {
-  width: 100%;
-  background: #e0e0e0;
-  border-radius: 8px;
-  margin-bottom: 1.5em;
-  height: 32px;
-  position: relative;
-  box-shadow: 0 2px 8px #43cea2aa;
-  border: 1px solid #43cea2;
-  overflow: hidden;
-}
-.progress-fill {
-  background: linear-gradient(90deg, #43cea2 60%, #185a9d 100%);
-  height: 100%;
-  width: 0%;
-  border-radius: 8px 0 0 8px;
-  transition: width 0.4s cubic-bezier(0.4, 2, 0.6, 1);
-}
-.progress-text {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #23272b;
-  font-weight: bold;
-  font-size: 1.1em;
-  letter-spacing: 1px;
-}
-.clue {
-  background: #fffbe7;
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 10px;
-  border-left: 6px solid #43cea2;
-  box-shadow: 0 0 10px #43cea233;
-  transition: all 0.3s ease;
-}
-.clue.correct {
-  border-left: 6px solid #43cea2;
-  box-shadow: 0 0 15px #43cea2aa;
-  background: #eafff3;
-}
-.clue.incorrect {
-  border-left: 6px solid #ff3333;
-  animation: shake 0.5s;
-  background: #ffeaea;
-}
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-10px);
-  }
-  75% {
-    transform: translateX(10px);
-  }
-}
-input[type="text"] {
-  padding: 0.8rem;
-  width: 70%;
-  margin-right: 0.5rem;
-  background: #f0fff7;
-  border: 1px solid #43cea2;
-  color: #185a9d;
-  font-family: "Segoe UI", sans-serif;
-  font-size: 1em;
-  border-radius: 4px;
-}
-button {
-  padding: 0.8rem 1.2rem;
-  background: linear-gradient(90deg, #43cea2 60%, #185a9d 100%);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.1em;
-  font-weight: bold;
-  cursor: pointer;
-  margin-left: 0.5em;
-  box-shadow: 0 2px 8px #43cea2aa;
-  transition: background 0.2s, color 0.2s;
-}
-button:hover {
-  background: linear-gradient(90deg, #185a9d 60%, #43cea2 100%);
-  color: #fffbe7;
-}
-.feedback {
-  display: block;
-  min-height: 1.2em;
-  font-size: 0.98em;
-  margin-top: 0.2em;
-}
-.feedback.correct {
-  color: #43cea2;
-  font-weight: bold;
-}
-.feedback.incorrect {
-  color: #ff3333;
-  font-weight: bold;
+  border: 2px solid #43cea2;
+  box-shadow: 0 4px 24px #00eaff55;
+  padding: 2em 3em;
+  text-align: center;
 }
 dialog {
-  background: #fffbe7;
-  color: #185a9d;
-  border-radius: 10px;
+  background: rgba(34, 38, 54, 0.97);
+  color: #00eaff;
+  border-radius: 16px;
   border: 2px solid #43cea2;
-  box-shadow: 0 4px 24px #43cea2aa;
-}
-#reset-btn {
-  font-size: 1em;
-  padding: 0.4em 1em;
-  background: #ffb3b3;
-  color: #23272b;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 2px 8px #ffb3b3aa;
-  z-index: 11;
-  transition: background 0.2s, color 0.2s;
-}
-#reset-btn:hover {
-  background: #ff6666;
-  color: #fff;
+  box-shadow: 0 4px 24px #00eaff55;
 }
