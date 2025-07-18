@@ -47,10 +47,7 @@ function checkAnswer(clue) {
   const input = clue.querySelector("input");
   const button = clue.querySelector("button");
   if (input.disabled) return;
-  const answers = clue
-    .getAttribute("data-answer")
-    .split(",")
-    .map((a) => a.trim().toLowerCase());
+  const answers = clue.getAttribute("data-answer").trim().toLowerCase();
   const userAnswer = input.value.trim().toLowerCase();
   const clueId = clue.getAttribute("data-clue");
   if (answers.includes(userAnswer)) {
