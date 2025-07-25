@@ -50,7 +50,7 @@ function checkAnswer(clue) {
   const answers = clue.getAttribute("data-answer").trim().toLowerCase();
   const userAnswer = input.value.trim().toLowerCase();
   const clueId = clue.getAttribute("data-clue");
-  if (answers.includes(userAnswer)) {
+  if (userAnswer && answers.includes(userAnswer)) {
     clue.classList.remove("incorrect");
     clue.classList.add("correct");
     solvedClues++;
