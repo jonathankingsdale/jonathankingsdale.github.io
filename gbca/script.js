@@ -118,10 +118,9 @@ function showCompletionModal() {
 // Reset button logic
 const resetBtn = document.getElementById("reset-btn");
 resetBtn.addEventListener("click", () => {
-  // localStorage.removeItem("gbca-answers");
-  // localStorage.removeItem("gbca-timer");
-  // location.reload();
-  showCompletionModal();
+  localStorage.removeItem("gbca-answers");
+  localStorage.removeItem("gbca-timer");
+  location.reload();
 });
 
 // Modal close button logic
