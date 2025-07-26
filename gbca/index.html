@@ -101,32 +101,12 @@
     </div>
     <div id="completion-modal" class="modal hidden">
       <div class="modal-content">
-        <button
-          id="close-modal-btn"
-          style="
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            font-size: 1.5em;
-            background: none;
-            border: none;
-            cursor: pointer;
-          "
-        >
-          &times;
-        </button>
-        <h2>Well done!</h2>
+        <button id="close-modal-btn" class="close-modal-btn">&times;</button>
+        <h2>Congratulations!</h2>
         <img
           src="../img/gbca-end.png"
           alt="Completion Image"
-          style="
-            display: block;
-            max-width: 220px;
-            width: 100%;
-            margin: 16px auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px #0002;
-          "
+          class="completion-image"
         />
         <p id="completion-time"></p>
       </div>
