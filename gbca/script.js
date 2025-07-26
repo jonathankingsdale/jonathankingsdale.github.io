@@ -92,10 +92,26 @@ function updateProgress() {
 
 function showCompletionModal() {
   const modal = document.getElementById("completion-modal");
-  const timeStr = timerEl.textContent;
+  // Parse the timer value (min:sec) into minutes and seconds
+  const [minStr, secStr] = timerEl.textContent.split(":");
+  const min = parseInt(minStr, 10);
+  const sec = parseInt(secStr, 10);
+  let timeString = "";
+  if (min > 0) {
+    timeString += `${min} minute${min !== 1 ? "s" : ""}`;
+  }
+  if (min > 0 && sec > 0) {
+    timeString += " and ";
+  }
+  if (sec > 0) {
+    timeString += `${sec} second${sec !== 1 ? "s" : ""}`;
+  }
+  if (timeString === "") {
+    timeString = "0 seconds";
+  }
   document.getElementById(
     "completion-time"
-  ).textContent = `You completed the escape room in ${timeStr}!`;
+  ).textContent = `You completed the escape room in ${timeString}!`;
   modal.classList.remove("hidden");
 }
 
