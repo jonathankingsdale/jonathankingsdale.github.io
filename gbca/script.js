@@ -115,6 +115,12 @@ function showCompletionModal() {
   modal.classList.remove("hidden");
 }
 
+// Add Download PDF button logic
+const downloadBtn = document.getElementById("download-btn");
+downloadBtn.addEventListener("click", () => {
+  window.open("../files/Puzzles.pdf", "_blank");
+});
+
 // Reset button logic
 const resetBtn = document.getElementById("reset-btn");
 resetBtn.addEventListener("click", () => {
