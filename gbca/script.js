@@ -107,4 +107,13 @@ resetBtn.addEventListener("click", () => {
   location.reload();
 });
 
+// Modal close button logic
+const closeModalBtn = document.getElementById("close-modal-btn");
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", () => {
+    const modal = document.getElementById("completion-modal");
+    modal.classList.add("hidden");
+  });
+}
+
 updateProgress();
