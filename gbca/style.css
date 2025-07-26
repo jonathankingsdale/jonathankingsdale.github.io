@@ -145,10 +145,12 @@ input[type="text"] {
   border: 1.5px solid #00eaff;
   color: #00eaff;
   font-family: "Segoe UI", sans-serif;
-  font-size: 1em;
+  font-size: 1.8em; /* Increased font size */
   border-radius: 4px;
   outline: none;
   transition: border 0.2s, background 0.2s;
+  height: 3.2em; /* Match button height */
+  box-sizing: border-box;
 }
 input[type="text"]:focus {
   border: 1.5px solid #43cea2;
@@ -160,12 +162,14 @@ button {
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 1.1em;
+  font-size: 1.8em; /* Match input font size */
   font-weight: bold;
   cursor: pointer;
   margin-left: 0.5em;
   box-shadow: 0 2px 8px #00eaff55;
   transition: background 0.2s, color 0.2s;
+  height: 3.2em; /* Explicit height to match input */
+  box-sizing: border-box;
 }
 button:hover {
   background: linear-gradient(90deg, #43cea2 0%, #00eaff 100%);
@@ -243,8 +247,9 @@ button:hover {
   }
 }
 .modal-content p#completion-time {
-  font-size: 1.6em;
+  font-size: 3em;
   margin-top: 10px;
+  text-align: center;
 }
 .close-modal-btn {
   position: absolute;
