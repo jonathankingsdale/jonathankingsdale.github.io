@@ -47,10 +47,10 @@ function checkAnswer(clue) {
   const input = clue.querySelector("input");
   const button = clue.querySelector("button");
   if (input.disabled) return;
-  const answers = clue.getAttribute("data-answer").trim().toLowerCase();
+  const answer = clue.getAttribute("data-answer").trim().toLowerCase();
   const userAnswer = input.value.trim().toLowerCase();
   const clueId = clue.getAttribute("data-clue");
-  if (userAnswer && answers.includes(userAnswer)) {
+  if (answer === userAnswer) {
     clue.classList.remove("incorrect");
     clue.classList.add("correct");
     solvedClues++;
