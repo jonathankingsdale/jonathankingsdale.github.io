@@ -52,10 +52,6 @@ body {
   box-shadow: 0 4px 16px #ffb3b3cc;
 }
 #download-btn {
-  display: none;
-  pointer-events: none;
-  opacity: 0.5;
-  filter: grayscale(1);
   font-size: 1em;
   padding: 0.4em 1.1em;
   background: linear-gradient(90deg, #43cea2 0%, #00eaff 100%);
