@@ -17,17 +17,33 @@ document.addEventListener("DOMContentLoaded", () => {
     { key: "1p", label: "1p coins", value: 0.01, type: "coin" },
   ];
 
+  // Emoji for each type
+  const typeEmojis = {
+    note: "💷",
+    coin: "🪙",
+  };
+
   // Render denomination input rows
   const denomContainer = document.getElementById("denominations");
   denominations.forEach((denom) => {
     const row = document.createElement("div");
     row.className = "denom-row";
     row.innerHTML = `
-      <span class="denom-label">${denom.label}</span>
+      <span class="denom-label">${typeEmojis[denom.type] || ""} ${
+      denom.label
+    }</span>
       <div class="denom-controls">
-        <button type="button" class="denom-btn" data-action="minus" data-key="${denom.key}">-</button>
-        <input type="number" min="0" step="1" class="denom-input" id="input-${denom.key}" value="0" data-key="${denom.key}" inputmode="numeric" pattern="[0-9]*">
-        <button type="button" class="denom-btn" data-action="plus" data-key="${denom.key}">+</button>
+        <button type="button" class="denom-btn" data-action="minus" data-key="${
+          denom.key
+        }">-</button>
+        <input type="number" min="0" step="1" class="denom-input" id="input-${
+          denom.key
+        }" value="0" data-key="${
+      denom.key
+    }" inputmode="numeric" pattern="[0-9]*">
+        <button type="button" class="denom-btn" data-action="plus" data-key="${
+          denom.key
+        }">+</button>
       </div>
     `;
     denomContainer.appendChild(row);
