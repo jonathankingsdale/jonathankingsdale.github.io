@@ -1,0 +1,88 @@
+/* Money Counter App - Modern, Elegant, Mobile-First */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f9fa;
+  margin: 0;
+  color: #222;
+}
+.container {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem 1rem;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+h1 {
+  text-align: center;
+  margin-bottom: 1.2rem;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+}
+.denom-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 0.7rem;
+}
+.denom-label {
+  flex: 1 1 50%;
+  font-size: 1.1rem;
+}
+.denom-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.denom-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  border: none;
+  border-radius: 50%;
+  background: #e3eafc;
+  color: #2a4d8f;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.denom-btn:active {
+  background: #b6c9f7;
+}
+.denom-input {
+  width: 3.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  border: 1px solid #d0d7e2;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.2rem;
+  background: #f7f9fa;
+}
+#totals-section {
+  margin-top: 2rem;
+}
+#totals-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+#totals-table th,
+#totals-table td {
+  padding: 0.5rem 0.3rem;
+  text-align: left;
+}
+#totals-table tr.grand-total td {
+  font-weight: bold;
+  font-size: 1.15rem;
+  border-top: 2px solid #b6c9f7;
+}
+@media (max-width: 500px) {
+  .container {
+    padding: 1rem 0.2rem 1.5rem 0.2rem;
+  }
+  h1 {
+    font-size: 1.3rem;
+  }
+  .denom-label {
+    font-size: 1rem;
+  }
+}
