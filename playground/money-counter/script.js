@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { key: "2coin", label: "£2 coins", value: 2, type: "coin" },
     { key: "1coin", label: "£1 coins", value: 1, type: "coin" },
     { key: "50p", label: "50p coins", value: 0.5, type: "coin" },
+    { key: "20p", label: "20p coins", value: 0.2, type: "coin" },
     { key: "10p", label: "10p coins", value: 0.1, type: "coin" },
     { key: "5p", label: "5p coins", value: 0.05, type: "coin" },
     { key: "2p", label: "2p coins", value: 0.02, type: "coin" },
@@ -89,8 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
       { label: "£1 notes", keys: ["1note"] },
       { label: "£1 & £2 coins", keys: ["2coin", "1coin"] },
       { label: "50p coins", keys: ["50p"] },
-      { label: "10p & 5p coins", keys: ["10p", "5p"] },
-      { label: "2p & 1p coins", keys: ["2p", "1p"] },
+      { label: "Silver coins (20p, 10p, 5p)", keys: ["20p", "10p", "5p"] },
+      { label: "Bronze coins (2p, 1p)", keys: ["2p", "1p"] },
     ];
     groups.forEach((group) => {
       let groupTotal = 0;
