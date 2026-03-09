@@ -1,0 +1,683 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800&display=swap');
+
+:root {
+  --quiz-primary: #c0392b;
+  --quiz-secondary: #2c3e50;
+  --quiz-accent: #f39c12;
+  --quiz-background: #fdf6e3;
+  --quiz-tile-back: #8e44ad;
+  --quiz-tile-front: #ecf0f1;
+  --quiz-team1: #e74c3c;
+  --quiz-team2: #3498db;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: var(--quiz-background);
+  color: var(--quiz-secondary);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================
+   UNIFIED TOP BAR
+   (replaces header + score bar + controls bar)
+   =========================== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.8rem;
+  background: var(--quiz-secondary);
+  color: #fff;
+  user-select: none;
+  flex-shrink: 0;
+  border-bottom: 3px solid var(--quiz-accent);
+  gap: 0.5rem;
+}
+
+.top-bar-left,
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.top-title {
+  font-family: 'Lilita One', cursive;
+  font-size: 1rem;
+  background: linear-gradient(135deg, var(--quiz-accent), #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.03em;
+}
+
+.top-btn {
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.top-btn:hover {
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+#btn-reset {
+  background: rgba(231, 76, 60, 0.7);
+  color: #fff;
+}
+
+#btn-reset:hover {
+  background: #e74c3c;
+}
+
+/* --- Scores (center of top bar) --- */
+.top-bar-scores {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.score-team {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.9rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.score-team.active {
+  outline: 2px solid var(--quiz-accent);
+  outline-offset: 2px;
+  animation: pulseGlow 1.5s ease infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 6px rgba(243, 156, 18, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(243, 156, 18, 0.6); }
+}
+
+.score-team-1 {
+  background: var(--quiz-team1);
+}
+
+.score-team-2 {
+  background: var(--quiz-team2);
+}
+
+.score-label {
+  font-family: 'Lilita One', cursive;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.score-value {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.6rem;
+  min-width: 2.5ch;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.score-vs {
+  font-family: 'Lilita One', cursive;
+  font-size: 0.85rem;
+  opacity: 0.4;
+}
+
+.score-toggle {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.score-toggle:hover {
+  border-color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+/* ===========================
+   TEAM EDGE STRIPS
+   =========================== */
+.team-strip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28px;
+  z-index: 2;
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+  pointer-events: none;
+}
+
+.team-strip-left {
+  left: 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.team-strip-right {
+  right: 0;
+  border-radius: 6px 0 0 6px;
+}
+
+body[data-active-team="0"] .team-strip {
+  background: var(--quiz-team1);
+  box-shadow: 0 0 24px var(--quiz-team1);
+}
+
+body[data-active-team="1"] .team-strip {
+  background: var(--quiz-team2);
+  box-shadow: 0 0 24px var(--quiz-team2);
+}
+
+/* ===========================
+   GAME AREA - fills all remaining space
+   =========================== */
+.game-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  min-height: 0;
+}
+
+/* Theme background image (behind game content) */
+.game-area::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--quiz-bg-image, none);
+  background-size: cover;
+  background-position: center;
+  opacity: 0.25;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.game-area > :not(.team-strip) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   TILE BOARD
+   =========================== */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6rem;
+  width: 100%;
+  max-width: min(88vw, calc(100vh - 80px));
+  aspect-ratio: 1;
+}
+
+.tile {
+  perspective: 800px;
+  cursor: pointer;
+}
+
+.tile.revealed {
+  cursor: default;
+}
+
+.tile-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.tile.revealed .tile-inner {
+  transform: rotateY(180deg);
+}
+
+.tile-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.tile-back {
+  background: var(--quiz-tile-back);
+  color: #fff;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.6rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15), 0 3px 8px rgba(0,0,0,0.15);
+  transition: box-shadow 0.2s;
+}
+
+.tile:not(.revealed):hover .tile-back {
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15), 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.tile-front {
+  background: var(--quiz-tile-front);
+  color: #2c3e50;
+  transform: rotateY(180deg);
+  padding: 0.25rem;
+  border: 3px solid var(--quiz-tile-back);
+  text-align: center;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+}
+
+.tile-front .tile-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+.tile-front .tile-label {
+  font-size: 0.7rem;
+  margin-top: 0.1rem;
+  opacity: 0.6;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tile-front .tile-value {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.1rem;
+}
+
+/* Team-colored revealed tiles */
+.tile.team-0 .tile-front {
+  background: color-mix(in srgb, var(--quiz-team1) 18%, var(--quiz-tile-front));
+  border-color: var(--quiz-team1);
+}
+
+.tile.team-1 .tile-front {
+  background: color-mix(in srgb, var(--quiz-team2) 18%, var(--quiz-tile-front));
+  border-color: var(--quiz-team2);
+}
+
+/* ===========================
+   RISK LADDER
+   =========================== */
+.ladder-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.ladder {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.ladder-step {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 3px solid transparent;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.ladder-step .step-number {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.6rem;
+  opacity: 0.2;
+  min-width: 2rem;
+  text-align: center;
+  margin-right: 0.75rem;
+}
+
+.ladder-step .step-name {
+  flex: 1;
+  font-family: 'Lilita One', cursive;
+  letter-spacing: 0.02em;
+}
+
+.ladder-step .step-reward {
+  font-family: 'Lilita One', cursive;
+  font-size: 1rem;
+  opacity: 0.5;
+}
+
+.ladder-step.current-0 {
+  border-color: var(--quiz-team1);
+  background: rgba(231, 76, 60, 0.12);
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(231, 76, 60, 0.2);
+}
+
+.ladder-step.current-1 {
+  border-color: var(--quiz-team2);
+  background: rgba(52, 152, 219, 0.12);
+  transform: scale(1.03);
+  box-shadow: 0 4px 16px rgba(52, 152, 219, 0.2);
+}
+
+.ladder-step.current-0.current-1 {
+  border-image: linear-gradient(
+      to right,
+      var(--quiz-team1) 50%,
+      var(--quiz-team2) 50%
+    )
+    1;
+}
+
+.ladder-step .step-tokens {
+  position: absolute;
+  right: -2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.ladder-token {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.ladder-token.team-0 {
+  background: var(--quiz-team1);
+}
+
+.ladder-token.team-1 {
+  background: var(--quiz-team2);
+}
+
+.ladder-buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.ladder-buttons button {
+  padding: 0.9rem 2.5rem;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.ladder-buttons button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.ladder-buttons button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-bank {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.btn-risk {
+  background: linear-gradient(135deg, var(--quiz-primary), #e74c3c);
+}
+
+.ladder-pending {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.3rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ===========================
+   WHEEL
+   =========================== */
+.wheel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.wheel-wrapper {
+  position: relative;
+  width: min(70vw, calc(100vh - 160px));
+  height: min(70vw, calc(100vh - 160px));
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  z-index: 2;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
+  line-height: 1;
+  color: var(--quiz-accent);
+}
+
+.wheel-canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: transform 3.5s cubic-bezier(0.15, 0.85, 0.25, 1);
+  filter: drop-shadow(0 6px 20px rgba(0,0,0,0.25));
+}
+
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--quiz-secondary);
+  border: 4px solid #fff;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.btn-spin {
+  padding: 0.8rem 3rem;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--quiz-primary), var(--quiz-accent));
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.btn-spin:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.btn-spin:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ===========================
+   OUTCOME OVERLAY
+   =========================== */
+.outcome-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.outcome-card {
+  background: #fff;
+  color: #2c3e50;
+  border-radius: 24px;
+  padding: 2.5rem 4rem;
+  text-align: center;
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 90vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.outcome-icon {
+  font-size: 4.5rem;
+  animation: bounceIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.outcome-text {
+  font-family: 'Lilita One', cursive;
+  font-size: 2.4rem;
+  margin: 0.4rem 0 0;
+  color: #2c3e50;
+  letter-spacing: 0.02em;
+}
+
+.outcome-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #666;
+  margin: 0.3rem 0 0;
+}
+
+/* ===========================
+   RISK DECISION MODAL
+   =========================== */
+.risk-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.risk-modal-card {
+  background: #fff;
+  color: #2c3e50;
+  border-radius: 24px;
+  padding: 2.5rem 3rem;
+  text-align: center;
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.risk-modal-card h2 {
+  font-family: 'Lilita One', cursive;
+  margin: 0 0 0.4rem;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+.risk-modal-card p {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #888;
+  margin: 0 0 1.5rem;
+}
+
+.risk-modal-buttons {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.risk-modal-buttons button {
+  padding: 0.9rem 2.2rem;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  letter-spacing: 0.02em;
+}
+
+.risk-modal-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.btn-keep {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.btn-double {
+  background: linear-gradient(135deg, #e67e22, #f39c12);
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bounceIn {
+  from { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  to { transform: scale(1); }
+}

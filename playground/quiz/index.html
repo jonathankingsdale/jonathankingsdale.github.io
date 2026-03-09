@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Night</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../header.css" />
+    <script src="../header.js"></script>
+    <script src="themes.js"></script>
+    <script src="game-config.js"></script>
+    <script src="state.js"></script>
+  </head>
+  <body>
+    <script>
+      initHeader("Quiz Night");
+    </script>
+
+    <div class="container">
+      <div class="landing-header">
+        <h1>Quiz Night</h1>
+        <p>Pick a game and theme, then hit Start!</p>
+      </div>
+
+      <h3>Choose a Game</h3>
+      <div class="game-cards" id="game-cards">
+        <div class="game-card" data-game="tileBoard">
+          <div class="card-icon">&#x1F4A0;</div>
+          <h4>Hidden Tiles</h4>
+          <p>Flip tiles to reveal points, steals and surprises</p>
+        </div>
+        <div class="game-card" data-game="riskLadder">
+          <div class="card-icon">&#x1FA9C;</div>
+          <h4>Risk Ladder</h4>
+          <p>Climb higher for bigger rewards &mdash; watch for traps!</p>
+        </div>
+        <div class="game-card" data-game="wheel">
+          <div class="card-icon">&#x1F3A1;</div>
+          <h4>Wheel Spinner</h4>
+          <p>Spin the wheel and see where fortune lands</p>
+        </div>
+      </div>
+
+      <h3>Choose a Theme</h3>
+      <div class="theme-buttons" id="theme-buttons"></div>
+
+      <button class="start-btn" id="start-btn" disabled>Start Game</button>
+    </div>
+
+    <script>
+      (function () {
+        var selectedGame = null;
+        var selectedTheme = null;
+
+        var themeBtns = document.getElementById("theme-buttons");
+        Object.keys(Quiz.themes).forEach(function (key) {
+          var theme = Quiz.themes[key];
+          var btn = document.createElement("button");
+          btn.className = "theme-btn";
+          btn.textContent = theme.name;
+          btn.dataset.theme = key;
+          btn.addEventListener("click", function () {
+            document.querySelectorAll(".theme-btn").forEach(function (b) {
+              b.classList.remove("selected");
+            });
+            btn.classList.add("selected");
+            selectedTheme = key;
+            updateStart();
+          });
+          themeBtns.appendChild(btn);
+        });
+
+        document.querySelectorAll(".game-card").forEach(function (card) {
+          card.addEventListener("click", function () {
+            document.querySelectorAll(".game-card").forEach(function (c) {
+              c.classList.remove("selected");
+            });
+            card.classList.add("selected");
+            selectedGame = card.dataset.game;
+            updateStart();
+          });
+        });
+
+        var startBtn = document.getElementById("start-btn");
+
+        function updateStart() {
+          startBtn.disabled = !(selectedGame && selectedTheme);
+        }
+
+        startBtn.addEventListener("click", function () {
+          if (!selectedGame || !selectedTheme) return;
+
+          var state;
+          if (selectedGame === "tileBoard") {
+            state = Quiz.state.createTileBoardState(selectedTheme);
+          } else if (selectedGame === "riskLadder") {
+            state = Quiz.state.createRiskLadderState(selectedTheme);
+          } else {
+            state = Quiz.state.createWheelState(selectedTheme);
+          }
+
+          Quiz.state.save(state);
+          window.location.href = "app.html";
+        });
+      })();
+    </script>
+  </body>
+</html>

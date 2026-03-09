@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Night</title>
+    <link rel="stylesheet" href="app.css" />
+    <script src="themes.js"></script>
+    <script src="game-config.js"></script>
+    <script src="state.js"></script>
+    <script src="ui.js"></script>
+    <script src="tile-board.js"></script>
+    <script src="risk-ladder.js"></script>
+    <script src="wheel.js"></script>
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button class="top-btn" id="btn-back" title="Back to menu">&#x2190; Menu</button>
+        <span class="top-title">Quiz Night</span>
+      </div>
+      <div class="top-bar-scores" id="score-bar"></div>
+      <div class="top-bar-right">
+        <button class="top-btn" id="btn-reset" title="Reset game">Reset</button>
+        <button class="top-btn" id="theme-toggle" title="Toggle dark/light mode"></button>
+      </div>
+    </div>
+
+    <div class="game-area" id="game-area">
+      <div class="team-strip team-strip-left"></div>
+      <div class="team-strip team-strip-right"></div>
+    </div>
+
+    <script>
+      (function () {
+        // Dark/light mode (replicate header.js logic without importing it)
+        var savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        var toggle = document.getElementById("theme-toggle");
+        function updateToggle() {
+          var t = document.documentElement.getAttribute("data-theme");
+          toggle.textContent = t === "light" ? "\u{1F31E}" : "\u{1F319}";
+        }
+        updateToggle();
+        toggle.addEventListener("click", function () {
+          var cur = document.documentElement.getAttribute("data-theme");
+          var next = cur === "light" ? "dark" : "light";
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("theme", next);
+          updateToggle();
+          var s = Quiz.state.load();
+          if (s) Quiz.ui.applyTheme(s.themeId);
+        });
+
+        var state = Quiz.state.load();
+        if (!state) {
+          window.location.href = "index.html";
+          return;
+        }
+
+        Quiz.ui.applyTheme(state.themeId);
+        Quiz.ui.initScoreBar();
+
+        var container = document.getElementById("game-area");
+
+        var engines = {
+          tileBoard: Quiz.engines.tileBoard,
+          riskLadder: Quiz.engines.riskLadder,
+          wheel: Quiz.engines.wheel,
+        };
+
+        if (engines[state.gameType]) {
+          engines[state.gameType].init(container);
+        }
+
+        document.getElementById("btn-back").addEventListener("click", function () {
+          window.location.href = "index.html";
+        });
+
+        document.getElementById("btn-reset").addEventListener("click", function () {
+          var old = Quiz.state.load();
+          var newState;
+          if (old.gameType === "tileBoard") {
+            newState = Quiz.state.createTileBoardState(old.themeId);
+          } else if (old.gameType === "riskLadder") {
+            newState = Quiz.state.createRiskLadderState(old.themeId);
+          } else {
+            newState = Quiz.state.createWheelState(old.themeId);
+          }
+          Quiz.state.save(newState);
+          window.location.reload();
+        });
+      })();
+    </script>
+  </body>
+</html>

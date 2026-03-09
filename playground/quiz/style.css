@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 4rem 1.5rem 2rem;
+  background: var(--bg-color, #fff);
+  color: var(--text-color, #1a1a1a);
+  min-height: 100vh;
+}
+
+/* ===========================
+   HEADER OVERRIDE
+   =========================== */
+.app-header {
+  background: #2c3e50 !important;
+  padding: 0.5rem 1.2rem !important;
+  box-shadow: none !important;
+  border-bottom: 3px solid #f39c12;
+}
+
+.header-title {
+  font-family: 'Lilita One', cursive !important;
+  font-size: 1.2rem !important;
+  color: #fff !important;
+  letter-spacing: 0.03em;
+  background: linear-gradient(135deg, #f39c12, #fff) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.header-link {
+  color: rgba(255,255,255,0.7) !important;
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  padding: 0.3rem 0.7rem !important;
+}
+
+.header-link:hover {
+  color: #fff !important;
+  background: rgba(255,255,255,0.1) !important;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+/* ===========================
+   LANDING
+   =========================== */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.landing-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.landing-header h1 {
+  font-family: 'Lilita One', cursive;
+  font-size: 3.2rem;
+  margin: 0 0 0.25rem;
+  background: linear-gradient(135deg, #e74c3c, #f39c12, #8e44ad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.02em;
+}
+
+.landing-header p {
+  color: var(--text-color, #1a1a1a);
+  opacity: 0.55;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+h3 {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.2rem;
+  margin: 0 0 0.75rem;
+  color: var(--text-color, #1a1a1a);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* --- Game Cards --- */
+.game-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.game-card {
+  border: 3px solid color-mix(in srgb, var(--text-color, #1a1a1a) 15%, transparent);
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  background: color-mix(in srgb, var(--text-color, #1a1a1a) 4%, var(--bg-color, #fff));
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(142, 68, 173, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.game-card:hover::before {
+  opacity: 1;
+}
+
+.game-card.selected {
+  border-color: #8e44ad;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.25), 0 8px 24px rgba(142, 68, 173, 0.15);
+}
+
+.game-card .card-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.game-card h4 {
+  margin: 0 0 0.35rem;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-color, #1a1a1a);
+  position: relative;
+}
+
+.game-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-color, #1a1a1a);
+  opacity: 0.5;
+  font-weight: 600;
+  position: relative;
+}
+
+/* --- Theme Buttons --- */
+.theme-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.theme-btn {
+  padding: 0.65rem 1.6rem;
+  border: 3px solid color-mix(in srgb, var(--text-color, #1a1a1a) 15%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text-color, #1a1a1a) 4%, var(--bg-color, #fff));
+  color: var(--text-color, #1a1a1a);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.theme-btn:hover {
+  border-color: color-mix(in srgb, var(--text-color, #1a1a1a) 35%, transparent);
+  transform: translateY(-1px);
+}
+
+.theme-btn.selected {
+  border-color: #8e44ad;
+  box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.25);
+}
+
+/* --- Start Button --- */
+.start-btn {
+  display: block;
+  width: 100%;
+  padding: 1.1rem;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #8e44ad, #c0392b);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(142, 68, 173, 0.3);
+}
+
+.start-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.start-btn:not(:disabled):hover {
+  opacity: 0.92;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(142, 68, 173, 0.4);
+}
+
+@media (max-width: 600px) {
+  .game-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .landing-header h1 {
+    font-size: 2.2rem;
+  }
+}
