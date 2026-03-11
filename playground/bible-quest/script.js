@@ -4,7 +4,7 @@ const clues = document.querySelectorAll(".clue");
 const totalClues = clues.length;
 
 // Timer logic with localStorage
-let secondsElapsed = parseInt(localStorage.getItem("gbca-timer")) || 0;
+let secondsElapsed = parseInt(localStorage.getItem("bible-quest-timer")) || 0;
 const timerEl = document.getElementById("timer");
 function updateTimer() {
   const min = Math.floor(secondsElapsed / 60);
@@ -14,12 +14,12 @@ function updateTimer() {
 updateTimer();
 let timerInterval = setInterval(() => {
   secondsElapsed++;
-  localStorage.setItem("gbca-timer", secondsElapsed);
+  localStorage.setItem("bible-quest-timer", secondsElapsed);
   updateTimer();
 }, 1000);
 
 // Restore answers from localStorage
-const savedAnswers = JSON.parse(localStorage.getItem("gbca-answers") || "{}");
+const savedAnswers = JSON.parse(localStorage.getItem("bible-quest-answers") || "{}");
 clues.forEach((clue) => {
   const clueId = clue.getAttribute("data-clue");
   const input = clue.querySelector("input");
@@ -74,9 +74,9 @@ function checkAnswer(clue) {
 }
 
 function saveAnswer(clueId, value, correct) {
-  const answers = JSON.parse(localStorage.getItem("gbca-answers") || "{}");
+  const answers = JSON.parse(localStorage.getItem("bible-quest-answers") || "{}");
   answers[clueId] = { value, correct };
-  localStorage.setItem("gbca-answers", JSON.stringify(answers));
+  localStorage.setItem("bible-quest-answers", JSON.stringify(answers));
 }
 
 function updateProgress() {
@@ -118,14 +118,14 @@ function showCompletionModal() {
 // Add Download PDF button logic
 const downloadBtn = document.getElementById("download-btn");
 downloadBtn.addEventListener("click", () => {
-  window.open("../files/Puzzles.pdf", "_blank");
+  window.open("../../files/Puzzles.pdf", "_blank");
 });
 
 // Reset button logic
 const resetBtn = document.getElementById("reset-btn");
 resetBtn.addEventListener("click", () => {
-  localStorage.removeItem("gbca-answers");
-  localStorage.removeItem("gbca-timer");
+  localStorage.removeItem("bible-quest-answers");
+  localStorage.removeItem("bible-quest-timer");
   location.reload();
 });
 

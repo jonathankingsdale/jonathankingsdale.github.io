@@ -51,6 +51,22 @@ body {
   color: #23243a;
   box-shadow: 0 4px 16px #ffb3b3cc;
 }
+#back-btn {
+  font-size: 1em;
+  padding: 0.4em 1.1em;
+  background: rgba(255, 255, 255, 0.12);
+  color: #e3e3e3;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+#back-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
 #download-btn {
   font-size: 1em;
   padding: 0.4em 1.1em;
