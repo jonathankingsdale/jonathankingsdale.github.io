@@ -12,6 +12,10 @@
     <script src="tile-board.js"></script>
     <script src="risk-ladder.js"></script>
     <script src="wheel.js"></script>
+    <script src="auction-house.js"></script>
+    <script src="bomb-defusal.js"></script>
+    <script src="treasure-map.js"></script>
+    <script src="tug-of-war.js"></script>
   </head>
   <body>
     <div class="top-bar">
@@ -67,6 +71,10 @@
           tileBoard: Quiz.engines.tileBoard,
           riskLadder: Quiz.engines.riskLadder,
           wheel: Quiz.engines.wheel,
+          auctionHouse: Quiz.engines.auctionHouse,
+          bombDefusal: Quiz.engines.bombDefusal,
+          treasureMap: Quiz.engines.treasureMap,
+          tugOfWar: Quiz.engines.tugOfWar,
         };
 
         if (engines[state.gameType]) {
@@ -77,16 +85,21 @@
           window.location.href = "index.html";
         });
 
+        var resetCreators = {
+          tileBoard: "createTileBoardState",
+          riskLadder: "createRiskLadderState",
+          wheel: "createWheelState",
+          auctionHouse: "createAuctionHouseState",
+          bombDefusal: "createBombDefusalState",
+          treasureMap: "createTreasureMapState",
+          tugOfWar: "createTugOfWarState",
+        };
+
         document.getElementById("btn-reset").addEventListener("click", function () {
           var old = Quiz.state.load();
-          var newState;
-          if (old.gameType === "tileBoard") {
-            newState = Quiz.state.createTileBoardState(old.themeId);
-          } else if (old.gameType === "riskLadder") {
-            newState = Quiz.state.createRiskLadderState(old.themeId);
-          } else {
-            newState = Quiz.state.createWheelState(old.themeId);
-          }
+          var creator = resetCreators[old.gameType];
+          if (!creator) return;
+          var newState = Quiz.state[creator](old.themeId);
           Quiz.state.save(newState);
           window.location.reload();
         });

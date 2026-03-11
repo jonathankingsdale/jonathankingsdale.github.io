@@ -1,5 +1,11 @@
 window.Quiz = window.Quiz || {};
 
+Quiz.log = function (engine, action, data) {
+  var msg = "[Quiz:" + engine + "] " + action;
+  if (data !== undefined) console.log(msg, data);
+  else console.log(msg);
+};
+
 Quiz.ui = {
   applyTheme: function (themeId) {
     var theme = Quiz.themes[themeId];
@@ -31,10 +37,11 @@ Quiz.ui = {
   renderScores: function () {
     var state = Quiz.state.load();
     if (!state) return;
+    var visible = sessionStorage.getItem("quiz-scores-visible") === "true";
     for (var i = 0; i < 2; i++) {
       var el = document.getElementById("score-value-" + i);
       if (el) {
-        el.textContent = state.scoresVisible ? state.scores[i] : "???";
+        el.textContent = visible ? state.scores[i] : "???";
       }
       var teamEl = document.getElementById("score-team-" + i);
       if (teamEl) {
@@ -123,9 +130,9 @@ Quiz.ui = {
     document
       .getElementById("score-toggle")
       .addEventListener("click", function () {
-        var s = Quiz.state.load();
-        s.scoresVisible = !s.scoresVisible;
-        Quiz.state.save(s);
+        var visible = sessionStorage.getItem("quiz-scores-visible") === "true";
+        sessionStorage.setItem("quiz-scores-visible", visible ? "false" : "true");
+        Quiz.log("UI", "Score visibility toggled", { visible: !visible });
         Quiz.ui.renderScores();
       });
 

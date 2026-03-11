@@ -681,3 +681,975 @@ body[data-active-team="1"] .team-strip {
   50% { transform: scale(1.2); }
   to { transform: scale(1); }
 }
+
+/* ===========================
+   TUG OF WAR
+   =========================== */
+.tow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.tow-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tow-round-name {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.6rem;
+  letter-spacing: 0.03em;
+  color: var(--quiz-accent);
+}
+
+.tow-turn-label {
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.tow-arena {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 100%);
+  border: 3px solid rgba(255,255,255,0.1);
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tow-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.tow-zone-left {
+  left: 0;
+  background: linear-gradient(90deg, var(--quiz-team1), transparent);
+  opacity: 0.1;
+}
+
+.tow-zone-right {
+  right: 0;
+  background: linear-gradient(-90deg, var(--quiz-team2), transparent);
+  opacity: 0.1;
+}
+
+.tow-track {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tow-marker {
+  width: 4px;
+  height: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+.tow-marker-center {
+  width: 4px;
+  height: 24px;
+  background: var(--quiz-accent);
+}
+
+.tow-rope {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 12px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(
+    90deg,
+    #a0826d 0px,
+    #c4a882 4px,
+    #8b6f5c 8px,
+    #c4a882 12px
+  );
+  border-radius: 6px;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.tow-knot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--quiz-accent);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s;
+}
+
+.tow-pull-btn {
+  padding: 1rem 3.5rem;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.5rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.tow-pull-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.tow-pull-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.tow-wins {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.1rem;
+}
+
+.tow-win-vs {
+  opacity: 0.4;
+  font-size: 0.85rem;
+}
+
+/* --- Power meter --- */
+.tow-meter-wrap {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.tow-meter-label {
+  font-family: 'Lilita One', cursive;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  opacity: 0.7;
+}
+
+.tow-meter {
+  position: relative;
+  height: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  border: 3px solid rgba(255,255,255,0.2);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.tow-mzone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Lilita One', cursive;
+  font-size: 0.7rem;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.tow-zone-slip  { background: #e74c3c; }
+.tow-zone-1     { background: #e67e22; }
+.tow-zone-2     { background: #f39c12; }
+.tow-zone-3     { background: #27ae60; }
+.tow-zone-4     { background: #2980b9; }
+.tow-zone-5     { background: #8e44ad; }
+.tow-zone-super { background: linear-gradient(90deg, #f39c12, #e74c3c, #8e44ad); }
+
+.tow-needle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 16px rgba(255,255,255,0.4);
+  border-radius: 2px;
+  z-index: 2;
+  transition: none;
+}
+
+.tow-btn-stop {
+  box-shadow: 0 0 20px rgba(255,255,255,0.3), 0 4px 16px rgba(0,0,0,0.2);
+  outline: 3px solid rgba(255,255,255,0.5);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   BOMB DEFUSAL
+   =========================== */
+.bomb-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.bomb-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.bomb-team-label {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.3rem;
+}
+
+.bomb-remaining {
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.6;
+}
+
+.bomb-status-safe {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.6rem;
+  color: #27ae60;
+}
+
+.bomb-device {
+  --pulse-speed: 2s;
+  background: linear-gradient(145deg, #3a3a3a, #2a2a2a, #3a3a3a);
+  border: 3px solid #555;
+  border-radius: 20px;
+  padding: 1.5rem;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  animation: devicePulse var(--pulse-speed) ease-in-out infinite;
+}
+
+@keyframes devicePulse {
+  0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); }
+  50% { box-shadow: 0 8px 32px rgba(231,76,60,0.3), inset 0 1px 0 rgba(255,255,255,0.05); }
+}
+
+.bomb-led {
+  text-align: center;
+  font-family: 'Lilita One', cursive;
+  font-size: 2.5rem;
+  color: #2ecc71;
+  text-shadow: 0 0 10px #2ecc71;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background: #1a1a1a;
+  border-radius: 8px;
+  border: 2px solid #333;
+}
+
+.bomb-led-warning {
+  color: #f39c12;
+  text-shadow: 0 0 10px #f39c12;
+}
+
+.bomb-led-danger {
+  color: #e74c3c;
+  text-shadow: 0 0 10px #e74c3c;
+  animation: ledBlink 0.5s ease infinite;
+}
+
+@keyframes ledBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.bomb-wire-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bomb-wire {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg,
+    var(--wire-color) 0%,
+    color-mix(in srgb, var(--wire-color) 70%, #fff) 50%,
+    var(--wire-color) 100%
+  );
+  border: 2px solid rgba(255,255,255,0.2);
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.5s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.bomb-wire:not(.bomb-wire-cut):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.bomb-wire-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+  animation: wireGlow 2s ease-in-out infinite;
+}
+
+@keyframes wireGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.bomb-wire-cut {
+  cursor: default;
+  opacity: 0.45;
+  transform: translateY(4px);
+  border-style: dashed;
+}
+
+.bomb-wire-cut .bomb-wire-glow {
+  animation: none;
+  opacity: 0;
+}
+
+.bomb-wire-label {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.bomb-shake {
+  animation: screenShake 0.5s ease;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translateX(0); }
+  10% { transform: translateX(-8px) rotate(-1deg); }
+  20% { transform: translateX(8px) rotate(1deg); }
+  30% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  50% { transform: translateX(-4px); }
+  60% { transform: translateX(4px); }
+  70% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
+/* ===========================
+   AUCTION HOUSE
+   =========================== */
+.auction-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 550px;
+}
+
+.auction-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.auction-round {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.4rem;
+  color: var(--quiz-accent);
+}
+
+.auction-prompt {
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.auction-dome-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auction-dome {
+  width: 160px;
+  height: 120px;
+  background: radial-gradient(ellipse at 35% 30%, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 40%, transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.05));
+  border: 3px solid rgba(212,175,55,0.6);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.5s;
+}
+
+.auction-dome-reveal {
+  transform: translateY(-30px) scale(1.1);
+  opacity: 0.4;
+}
+
+.auction-dome-icon {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+
+.auction-base {
+  width: 200px;
+  height: 16px;
+  background: linear-gradient(180deg, #d4af37, #b8960c);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border: 2px solid rgba(212,175,55,0.4);
+  border-top: none;
+}
+
+.auction-bid-area {
+  width: 100%;
+}
+
+.auction-bid-panels {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.auction-bid-panel {
+  flex: 1;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 14px;
+  border: 3px solid rgba(255,255,255,0.15);
+}
+
+.auction-bid-panel-0 {
+  background: color-mix(in srgb, var(--quiz-team1) 15%, transparent);
+  border-color: var(--quiz-team1);
+}
+
+.auction-bid-panel-1 {
+  background: color-mix(in srgb, var(--quiz-team2) 15%, transparent);
+  border-color: var(--quiz-team2);
+}
+
+.auction-bid-team {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.auction-bid-bank {
+  font-size: 0.85rem;
+  font-weight: 700;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+.auction-bid-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.auction-bid-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  color: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auction-bid-btn:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.auction-bid-value {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.8rem;
+  min-width: 3ch;
+  text-align: center;
+}
+
+.auction-btn {
+  display: block;
+  width: 100%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.3rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.auction-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.auction-btn-start {
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+}
+
+.auction-btn-gavel {
+  background: linear-gradient(135deg, var(--quiz-primary), #c0392b);
+}
+
+.auction-result-text {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  opacity: 0.7;
+  padding: 0.5rem;
+}
+
+/* ===========================
+   TREASURE MAP
+   =========================== */
+.tmap-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 700px;
+}
+
+.tmap-info {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tmap-team-label {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.3rem;
+}
+
+.tmap-turns {
+  font-size: 0.9rem;
+  font-weight: 700;
+  opacity: 0.6;
+}
+
+.tmap-area {
+  width: 100%;
+  min-height: 120px;
+  overflow-x: auto;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(139,109,76,0.06) 20px, rgba(139,109,76,0.06) 21px),
+    repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(139,109,76,0.06) 20px, rgba(139,109,76,0.06) 21px),
+    linear-gradient(135deg, #f5e6c8, #e8d5a8, #f0dbb8);
+  border-radius: 16px;
+  padding: 1.2rem 0.6rem;
+  border: 3px solid #c4a67a;
+  box-shadow: inset 0 0 20px rgba(139,109,76,0.15), 0 4px 16px rgba(0,0,0,0.15);
+}
+
+[data-theme="dark"] .tmap-area {
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 20px, rgba(139,109,76,0.1) 20px, rgba(139,109,76,0.1) 21px),
+    repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(139,109,76,0.1) 20px, rgba(139,109,76,0.1) 21px),
+    linear-gradient(135deg, #3a3225, #2e2820, #3a3225);
+  border-color: #5a4a35;
+}
+
+/* --- Tree layout --- */
+.tmap-tree {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: min-content;
+}
+
+.tmap-tree-row {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+}
+
+.tmap-tree-cell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0.2rem;
+}
+
+.tmap-tree-empty {
+  visibility: hidden;
+}
+
+.tmap-tree-node {
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.4);
+  position: relative;
+  transition: all 0.4s;
+  cursor: default;
+  min-width: 56px;
+  max-width: 72px;
+}
+
+[data-theme="dark"] .tmap-tree-node {
+  background: rgba(255,255,255,0.08);
+}
+
+.tmap-current {
+  border-color: var(--quiz-accent) !important;
+  box-shadow: 0 0 14px rgba(243,156,18,0.4);
+  transform: scale(1.1);
+  z-index: 2;
+}
+
+.tmap-revealed.tmap-type-reward  { border-color: #27ae60; background: rgba(39,174,96,0.15); }
+.tmap-revealed.tmap-type-hazard  { border-color: #e74c3c; background: rgba(231,76,60,0.15); }
+.tmap-revealed.tmap-type-deadEnd { border-color: #95a5a6; background: rgba(149,165,166,0.2); }
+.tmap-revealed.tmap-type-treasure {
+  border-color: #f39c12;
+  background: rgba(243,156,18,0.2);
+  box-shadow: 0 0 16px rgba(243,156,18,0.3);
+}
+
+.tmap-visited {
+  border-color: rgba(139,109,76,0.3);
+  background: rgba(255,255,255,0.25);
+}
+
+.tmap-adjacent {
+  border-color: var(--quiz-accent);
+  border-style: dashed;
+  background: rgba(243,156,18,0.08);
+  animation: adjacentPulse 1.5s ease infinite;
+}
+
+@keyframes adjacentPulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(243,156,18,0.2); }
+  50% { box-shadow: 0 0 12px rgba(243,156,18,0.4); }
+}
+
+.tmap-fog {
+  opacity: 0.3;
+  filter: blur(1.5px);
+  border-color: rgba(0,0,0,0.05);
+}
+
+.tmap-cell-icon {
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+.tmap-cell-label {
+  font-size: 0.55rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  color: #2c3e50;
+  line-height: 1;
+}
+
+[data-theme="dark"] .tmap-cell-label {
+  color: #ecf0f1;
+}
+
+.tmap-cell-val {
+  font-family: 'Lilita One', cursive;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+/* --- Connector lines between tree levels --- */
+.tmap-conn-row {
+  display: flex;
+  width: 100%;
+  height: 20px;
+}
+
+.tmap-conn-pair {
+  flex: 1;
+  display: flex;
+  position: relative;
+  min-height: 20px;
+}
+
+.tmap-conn-line {
+  flex: 1;
+  position: relative;
+}
+
+.tmap-conn-left::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  border-right: 2px dashed #8b6f5c;
+  border-top: 2px dashed #8b6f5c;
+  border-radius: 0 6px 0 0;
+}
+
+.tmap-conn-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-left: 2px dashed #8b6f5c;
+  border-top: 2px dashed #8b6f5c;
+  border-radius: 6px 0 0 0;
+}
+
+.tmap-conn-hidden::after {
+  display: none;
+}
+
+.tmap-token {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid;
+  font-family: 'Lilita One', cursive;
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  animation: tokenBounce 1.5s ease infinite;
+  color: #2c3e50;
+  z-index: 3;
+}
+
+@keyframes tokenBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* --- Action buttons --- */
+.tmap-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.tmap-fork-btns {
+  display: flex;
+  gap: 1rem;
+}
+
+.tmap-signpost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.tmap-signpost-post {
+  width: 8px;
+  height: 20px;
+  background: linear-gradient(180deg, #8b6f5c, #6d5444);
+  border-radius: 2px;
+}
+
+.tmap-signpost-label {
+  font-family: 'Lilita One', cursive;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.tmap-btn {
+  padding: 0.7rem 1.8rem;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Lilita One', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tmap-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+
+.tmap-btn-reveal {
+  background: linear-gradient(135deg, var(--quiz-accent), #e67e22);
+}
+
+.tmap-btn-left {
+  background: linear-gradient(135deg, #8e44ad, #9b59b6);
+}
+
+.tmap-btn-right {
+  background: linear-gradient(135deg, #27ae60, #2ecc71);
+}
+
+.tmap-game-over {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.4rem;
+  color: var(--quiz-accent);
+}
+
+.tmap-end-msg {
+  font-family: 'Lilita One', cursive;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 600px) {
+  .tow-arena {
+    height: 140px;
+  }
+
+  .tow-pull-btn {
+    padding: 0.8rem 2.5rem;
+    font-size: 1.2rem;
+  }
+
+  .bomb-device {
+    padding: 1rem;
+  }
+
+  .bomb-led {
+    font-size: 2rem;
+  }
+
+  .auction-dome {
+    width: 120px;
+    height: 90px;
+  }
+
+  .auction-dome-icon {
+    font-size: 2.5rem;
+  }
+
+  .auction-base {
+    width: 150px;
+  }
+
+  .auction-bid-panels {
+    flex-direction: column;
+  }
+
+  .tmap-tree-node {
+    min-width: 44px;
+    max-width: 56px;
+  }
+
+  .tmap-cell-icon {
+    font-size: 1rem;
+  }
+
+  .tmap-cell-label {
+    display: none;
+  }
+
+  .tow-meter {
+    height: 34px;
+  }
+
+  .tow-mzone span {
+    font-size: 0.6rem;
+  }
+}
+
+/* ===========================
+   DARK MODE OVERRIDES
+   =========================== */
+[data-theme="dark"] .bomb-device {
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a, #2a2a2a);
+  border-color: #444;
+}
+
+[data-theme="dark"] .auction-dome {
+  background: radial-gradient(ellipse at 35% 30%, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+  border-color: rgba(212,175,55,0.4);
+}
+
+[data-theme="dark"] .tow-arena {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border-color: rgba(255,255,255,0.05);
+}
+
+[data-theme="dark"] .outcome-card {
+  background: #2a2a2a;
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .outcome-text {
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .risk-modal-card {
+  background: #2a2a2a;
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .risk-modal-card h2 {
+  color: #ecf0f1;
+}
+
+[data-theme="dark"] .risk-modal-card p {
+  color: #95a5a6;
+}

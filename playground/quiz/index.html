@@ -39,6 +39,26 @@
           <h4>Wheel Spinner</h4>
           <p>Spin the wheel and see where fortune lands</p>
         </div>
+        <div class="game-card" data-game="auctionHouse">
+          <div class="card-icon">&#x1F3DB;&#xFE0F;</div>
+          <h4>Auction House</h4>
+          <p>Bid your points on mystery items &mdash; treasure or curse?</p>
+        </div>
+        <div class="game-card" data-game="bombDefusal">
+          <div class="card-icon">&#x1F4A3;</div>
+          <h4>Bomb Defusal</h4>
+          <p>Cut wires to score points &mdash; but don't go BOOM!</p>
+        </div>
+        <div class="game-card" data-game="treasureMap">
+          <div class="card-icon">&#x1F5FA;&#xFE0F;</div>
+          <h4>Treasure Map</h4>
+          <p>Choose your path through forks &mdash; find the treasure!</p>
+        </div>
+        <div class="game-card" data-game="tugOfWar">
+          <div class="card-icon">&#x1F3CB;&#xFE0F;</div>
+          <h4>Tug of War</h4>
+          <p>Pull the rope to your side &mdash; strongest team wins!</p>
+        </div>
       </div>
 
       <h3>Choose a Theme</h3>
@@ -87,18 +107,21 @@
           startBtn.disabled = !(selectedGame && selectedTheme);
         }
 
+        var stateCreators = {
+          tileBoard: "createTileBoardState",
+          riskLadder: "createRiskLadderState",
+          wheel: "createWheelState",
+          auctionHouse: "createAuctionHouseState",
+          bombDefusal: "createBombDefusalState",
+          treasureMap: "createTreasureMapState",
+          tugOfWar: "createTugOfWarState",
+        };
+
         startBtn.addEventListener("click", function () {
           if (!selectedGame || !selectedTheme) return;
-
-          var state;
-          if (selectedGame === "tileBoard") {
-            state = Quiz.state.createTileBoardState(selectedTheme);
-          } else if (selectedGame === "riskLadder") {
-            state = Quiz.state.createRiskLadderState(selectedTheme);
-          } else {
-            state = Quiz.state.createWheelState(selectedTheme);
-          }
-
+          var creator = stateCreators[selectedGame];
+          if (!creator) return;
+          var state = Quiz.state[creator](selectedTheme);
           Quiz.state.save(state);
           window.location.href = "app.html";
         });

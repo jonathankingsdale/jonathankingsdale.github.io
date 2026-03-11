@@ -55,7 +55,7 @@ body {
    LANDING
    =========================== */
 .container {
-  max-width: 860px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -96,7 +96,7 @@ h3 {
 /* --- Game Cards --- */
 .game-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }

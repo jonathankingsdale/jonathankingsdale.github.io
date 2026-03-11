@@ -6,6 +6,7 @@ Quiz.engines.riskLadder = {
     var state = Quiz.state.load();
     var theme = Quiz.themes[state.themeId];
     var cfg = Quiz.config.riskLadder;
+    Quiz.log("RiskLadder", "Init", { theme: state.themeId, traps: state.ladderTraps });
 
     var wrap = document.createElement("div");
     wrap.className = "ladder-container";
@@ -25,7 +26,7 @@ Quiz.engines.riskLadder = {
       step.id = "ladder-step-" + i;
       step.innerHTML =
         '<span class="step-number">' + (i + 1) + "</span>" +
-        '<span class="step-name">' + theme.ladderSteps[i] + "</span>" +
+        '<span class="step-name">' + (theme.ladderSteps[i] || ("Step " + (i + 1))) + "</span>" +
         '<span class="step-reward">+' + cfg.steps[i].reward + "</span>" +
         '<span class="step-tokens" id="step-tokens-' + i + '"></span>';
       ladder.appendChild(step);
@@ -111,6 +112,7 @@ Quiz.engines.riskLadder = {
     var team = state.currentTeam;
     var pos = state.ladderPositions[team];
     var nextPos = pos + 1;
+    Quiz.log("RiskLadder", "Risk taken", { team: team, from: pos, to: nextPos });
 
     if (nextPos >= cfg.steps.length) {
       Quiz.ui.showMessage("Already at the top! You must bank.", 1500);
@@ -162,6 +164,7 @@ Quiz.engines.riskLadder = {
     var theme = Quiz.themes[state.themeId];
     var team = state.currentTeam;
     var banked = state.pendingPoints[team];
+    Quiz.log("RiskLadder", "Bank", { team: team, banked: banked, totalScore: state.scores[team] + banked });
 
     if (banked === 0 && state.ladderPositions[team] < 0) {
       return;

@@ -19,6 +19,7 @@ Quiz.engines.wheel = {
     var state = Quiz.state.load();
     var theme = Quiz.themes[state.themeId];
     var segments = Quiz.config.wheel.segments;
+    Quiz.log("Wheel", "Init", { theme: state.themeId, segments: segments.length });
 
     var wrap = document.createElement("div");
     wrap.className = "wheel-container";
@@ -204,6 +205,7 @@ Quiz.engines.wheel = {
     }
 
     this._chosenSegment = segments[chosenIndex];
+    Quiz.log("Wheel", "Spin", { team: Quiz.state.load().currentTeam, result: segments[chosenIndex].type, value: segments[chosenIndex].value });
 
     // Calculate target rotation so chosen segment lands under pointer (top)
     var angle = this._segmentAngles[chosenIndex];

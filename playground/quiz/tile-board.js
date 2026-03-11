@@ -5,6 +5,7 @@ Quiz.engines.tileBoard = {
   init: function (container) {
     var state = Quiz.state.load();
     var theme = Quiz.themes[state.themeId];
+    Quiz.log("TileBoard", "Init", { theme: state.themeId, revealed: state.board.filter(function(t){return t.revealed}).length + "/" + state.board.length });
 
     var grid = document.createElement("div");
     grid.className = "tile-grid";
@@ -57,6 +58,7 @@ Quiz.engines.tileBoard = {
 
     state.board[index].revealed = true;
     state.board[index].revealedBy = state.currentTeam;
+    Quiz.log("TileBoard", "Tile revealed", { tile: index, team: state.currentTeam, type: state.board[index].type, value: state.board[index].value });
     Quiz.state.save(state);
 
     el.classList.add("revealed");
@@ -141,6 +143,7 @@ Quiz.engines.tileBoard = {
 
   _endTurn: function (state, bonusTurn) {
     state = Quiz.state.load();
+    Quiz.log("TileBoard", "End turn", { team: state.currentTeam, scores: state.scores.slice(), bonusTurn: bonusTurn });
     var allRevealed = state.board.every(function (t) {
       return t.revealed;
     });
