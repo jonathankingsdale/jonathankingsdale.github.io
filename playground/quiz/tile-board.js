@@ -48,7 +48,7 @@ Quiz.engines.tileBoard = {
       return t.revealed;
     });
     if (allRevealed) {
-      Quiz.ui.showMessage("Game Over! All tiles revealed.", 3000);
+      Quiz.engines.tileBoard._showWinner(state);
     }
   },
 
@@ -210,7 +210,7 @@ Quiz.engines.tileBoard = {
     if (allRevealed) {
       state.gameOver = true;
       Quiz.state.save(state);
-      Quiz.ui.showMessage("Game Over! All tiles revealed.", 3000);
+      Quiz.engines.tileBoard._showWinner(state);
       return;
     }
     if (!bonusTurn) {
@@ -251,5 +251,58 @@ Quiz.engines.tileBoard = {
     if (tile.value > 0) return "+" + tile.value;
     if (tile.value < 0) return "" + tile.value;
     return "";
+  },
+
+  _showWinner: function (state) {
+    var s0 = state.scores[0];
+    var s1 = state.scores[1];
+    var teams = Quiz.config.teams;
+    var winner, loser, winnerIdx, isDraw;
+
+    if (s0 > s1) {
+      winnerIdx = 0;
+      isDraw = false;
+    } else if (s1 > s0) {
+      winnerIdx = 1;
+      isDraw = false;
+    } else {
+      winnerIdx = -1;
+      isDraw = true;
+    }
+
+    var overlay = document.createElement("div");
+    var teamClass = isDraw ? "winner-draw" : "winner-team-" + winnerIdx;
+    overlay.className = "winner-overlay " + teamClass;
+
+    var trophy = isDraw ? "\u{1F91D}" : "\u{1F3C6}";
+    var title = isDraw ? "It's a Draw!" : teams.names[winnerIdx] + " Wins!";
+    var subtitle = isDraw
+      ? "Both teams finished with " + s0 + " points"
+      : "Congratulations!";
+
+    overlay.innerHTML =
+      '<div class="winner-card">' +
+        '<div class="winner-trophy">' + trophy + '</div>' +
+        '<div class="winner-title">' + title + '</div>' +
+        '<div class="winner-subtitle">' + subtitle + '</div>' +
+        '<div class="winner-scores">' +
+          '<div class="winner-team-score' + (winnerIdx === 0 ? ' winner-highlight' : '') + '">' +
+            '<span class="winner-team-name">' + teams.names[0] + '</span>' +
+            '<span class="winner-team-pts">' + s0 + '</span>' +
+          '</div>' +
+          '<span class="winner-vs">VS</span>' +
+          '<div class="winner-team-score' + (winnerIdx === 1 ? ' winner-highlight' : '') + '">' +
+            '<span class="winner-team-name">' + teams.names[1] + '</span>' +
+            '<span class="winner-team-pts">' + s1 + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<button class="winner-btn" id="winner-menu-btn">\u{2190} Back to Menu</button>' +
+      '</div>';
+
+    document.body.appendChild(overlay);
+
+    document.getElementById("winner-menu-btn").addEventListener("click", function () {
+      window.location.href = "index.html";
+    });
   },
 };
