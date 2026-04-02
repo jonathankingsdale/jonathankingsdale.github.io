@@ -37,7 +37,7 @@ Quiz.ui = {
   renderScores: function () {
     var state = Quiz.state.load();
     if (!state) return;
-    var visible = sessionStorage.getItem("quiz-scores-visible") === "true";
+    var visible = sessionStorage.getItem("quiz-scores-visible") !== "false";
     for (var i = 0; i < 2; i++) {
       var el = document.getElementById("score-value-" + i);
       if (el) {
@@ -130,7 +130,7 @@ Quiz.ui = {
     document
       .getElementById("score-toggle")
       .addEventListener("click", function () {
-        var visible = sessionStorage.getItem("quiz-scores-visible") === "true";
+        var visible = sessionStorage.getItem("quiz-scores-visible") !== "false";
         sessionStorage.setItem("quiz-scores-visible", visible ? "false" : "true");
         Quiz.log("UI", "Score visibility toggled", { visible: !visible });
         Quiz.ui.renderScores();

@@ -233,11 +233,11 @@ body[data-active-team="1"] .team-strip {
    =========================== */
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 0.6rem;
   width: 100%;
-  max-width: min(88vw, calc(100vh - 80px));
-  aspect-ratio: 1;
+  max-width: min(88vw, calc((100vh - 80px) * 1.2));
+  aspect-ratio: 6 / 5;
 }
 
 .tile {
@@ -1652,4 +1652,341 @@ body[data-active-team="1"] .team-strip {
 
 [data-theme="dark"] .risk-modal-card p {
   color: #95a5a6;
+}
+
+/* ===========================
+   LARGE SCREEN / PROJECTOR
+   =========================== */
+@media (min-width: 1200px) {
+  /* --- Top bar --- */
+  .top-bar {
+    padding: 0.7rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .top-title {
+    font-size: 1.6rem;
+  }
+
+  .top-btn {
+    font-size: 1.1rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+  }
+
+  /* --- Scores --- */
+  .top-bar-scores {
+    gap: 1.2rem;
+  }
+
+  .score-team {
+    padding: 0.4rem 1.4rem;
+    border-radius: 10px;
+  }
+
+  .score-label {
+    font-size: 1.4rem;
+  }
+
+  .score-value {
+    font-size: 2.8rem;
+    min-width: 3ch;
+  }
+
+  .score-vs {
+    font-size: 1.2rem;
+  }
+
+  .score-toggle {
+    font-size: 1.4rem;
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* --- Team edge strips --- */
+  .team-strip {
+    width: 40px;
+  }
+
+  /* --- Tile board --- */
+  .tile-grid {
+    max-width: 90vw;
+    width: 90vw;
+    aspect-ratio: auto;
+    height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
+    grid-template-rows: repeat(5, 1fr);
+  }
+
+  .tile-back {
+    font-size: 2.4rem;
+  }
+
+  .tile-front .tile-icon {
+    font-size: 2.6rem;
+  }
+
+  .tile-front .tile-label {
+    font-size: 1rem;
+  }
+
+  .tile-front .tile-value {
+    font-size: 1.6rem;
+  }
+
+  /* --- Risk ladder --- */
+  .ladder-container {
+    max-width: 750px;
+  }
+
+  .ladder-step {
+    padding: 1.1rem 2rem;
+    font-size: 1.6rem;
+  }
+
+  .ladder-step .step-number {
+    font-size: 2.2rem;
+    min-width: 2.5rem;
+  }
+
+  .ladder-step .step-reward {
+    font-size: 1.3rem;
+  }
+
+  .ladder-buttons button {
+    padding: 1.1rem 3.2rem;
+    font-size: 1.8rem;
+  }
+
+  .ladder-pending {
+    font-size: 1.6rem;
+  }
+
+  /* --- Wheel --- */
+  .wheel-pointer {
+    font-size: 3.5rem;
+    top: -1.6rem;
+  }
+
+  .btn-spin {
+    padding: 1rem 4rem;
+    font-size: 1.8rem;
+  }
+
+  /* --- Outcome overlay --- */
+  .outcome-card {
+    padding: 3.5rem 5.5rem;
+    border-radius: 28px;
+  }
+
+  .outcome-icon {
+    font-size: 6rem;
+  }
+
+  .outcome-text {
+    font-size: 3.5rem;
+  }
+
+  .outcome-sub {
+    font-size: 1.6rem;
+  }
+
+  /* --- Risk decision modal --- */
+  .risk-modal-card {
+    padding: 3rem 4rem;
+  }
+
+  .risk-modal-card h2 {
+    font-size: 2.8rem;
+  }
+
+  .risk-modal-card p {
+    font-size: 1.4rem;
+  }
+
+  .risk-modal-buttons button {
+    padding: 1.1rem 3rem;
+    font-size: 1.8rem;
+  }
+
+  /* --- Tug of war --- */
+  .tow-container {
+    max-width: 900px;
+  }
+
+  .tow-round-name {
+    font-size: 2rem;
+  }
+
+  .tow-turn-label {
+    font-size: 1.3rem;
+  }
+
+  .tow-arena {
+    height: 240px;
+  }
+
+  .tow-pull-btn {
+    padding: 1.2rem 4.5rem;
+    font-size: 2rem;
+  }
+
+  .tow-wins {
+    font-size: 1.4rem;
+  }
+
+  .tow-win-vs {
+    font-size: 1.1rem;
+  }
+
+  .tow-meter-label {
+    font-size: 1.3rem;
+  }
+
+  .tow-meter {
+    height: 56px;
+    border-radius: 28px;
+  }
+
+  .tow-mzone {
+    font-size: 1rem;
+  }
+
+  .tow-knot {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* --- Bomb defusal --- */
+  .bomb-container {
+    max-width: 650px;
+  }
+
+  .bomb-team-label {
+    font-size: 1.8rem;
+  }
+
+  .bomb-remaining {
+    font-size: 1.2rem;
+  }
+
+  .bomb-status-safe {
+    font-size: 2rem;
+  }
+
+  .bomb-led {
+    font-size: 3.5rem;
+  }
+
+  .bomb-wire {
+    padding: 1rem 1.8rem;
+    border-radius: 12px;
+  }
+
+  .bomb-wire-label {
+    font-size: 1.6rem;
+  }
+
+  /* --- Auction house --- */
+  .auction-container {
+    max-width: 700px;
+  }
+
+  .auction-round {
+    font-size: 1.8rem;
+  }
+
+  .auction-prompt {
+    font-size: 1.3rem;
+  }
+
+  .auction-dome {
+    width: 200px;
+    height: 150px;
+  }
+
+  .auction-dome-icon {
+    font-size: 4.5rem;
+  }
+
+  .auction-base {
+    width: 250px;
+  }
+
+  .auction-bid-team {
+    font-size: 1.4rem;
+  }
+
+  .auction-bid-bank {
+    font-size: 1.1rem;
+  }
+
+  .auction-bid-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+  }
+
+  .auction-bid-value {
+    font-size: 2.6rem;
+  }
+
+  .auction-btn {
+    padding: 1.1rem;
+    font-size: 1.6rem;
+  }
+
+  .auction-result-text {
+    font-size: 1.3rem;
+  }
+
+  /* --- Treasure map --- */
+  .tmap-container {
+    max-width: 900px;
+  }
+
+  .tmap-team-label {
+    font-size: 1.8rem;
+  }
+
+  .tmap-turns {
+    font-size: 1.2rem;
+  }
+
+  .tmap-tree-node {
+    min-width: 72px;
+    max-width: 96px;
+  }
+
+  .tmap-tree-cell {
+    min-height: 72px;
+  }
+
+  .tmap-cell-icon {
+    font-size: 1.8rem;
+  }
+
+  .tmap-cell-label {
+    font-size: 0.8rem;
+  }
+
+  .tmap-cell-val {
+    font-size: 1.1rem;
+  }
+
+  .tmap-btn {
+    padding: 0.9rem 2.4rem;
+    font-size: 1.5rem;
+  }
+
+  .tmap-signpost-label {
+    font-size: 1.1rem;
+  }
+
+  .tmap-game-over {
+    font-size: 1.8rem;
+  }
+
+  .tmap-end-msg {
+    font-size: 1.4rem;
+  }
 }

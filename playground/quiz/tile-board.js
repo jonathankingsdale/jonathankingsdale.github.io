@@ -138,6 +138,66 @@ Quiz.engines.tileBoard = {
       Quiz.ui.showOutcome("Bonus Turn!", icon, label, 1800, function () {
         self._endTurn(state, true);
       });
+    } else if (tile.type === "swap") {
+      var tmp = state.scores[0];
+      state.scores[0] = state.scores[1];
+      state.scores[1] = tmp;
+      Quiz.state.save(state);
+      Quiz.ui.renderScores(state);
+      Quiz.ui.showOutcome("Scores Swapped!", icon, label, 2200, function () {
+        self._endTurn(state, false);
+      });
+    } else if (tile.type === "mystery") {
+      // Pick a random outcome from the non-mystery types
+      var pool = [
+        { type: "points", value: 100 },
+        { type: "points", value: 200 },
+        { type: "points", value: 300 },
+        { type: "negative", value: -100 },
+        { type: "steal", value: 100 },
+        { type: "bonusTurn", value: 0 },
+        { type: "jackpot", value: 500 },
+        { type: "swap", value: 0 },
+        { type: "tithe", value: 0 },
+        { type: "earthquake", value: -150 },
+        { type: "gift", value: 150 },
+      ];
+      var pick = pool[Math.floor(Math.random() * pool.length)];
+      pick.variant = Math.floor(Math.random() * 10);
+      var theme = Quiz.themes[state.themeId];
+      var pickIcon = self._getIcon(pick, theme);
+      var pickLabel = self._getLabel(pick, theme);
+      Quiz.ui.showOutcome("Mystery...", icon, label, 1200, function () {
+        self._processOutcome(pick, pickIcon, pickLabel, Quiz.state.load());
+      });
+    } else if (tile.type === "tithe") {
+      var other = team === 0 ? 1 : 0;
+      var titheAmt = Math.round(state.scores[other] * 0.25);
+      state.scores[other] -= titheAmt;
+      state.scores[team] += titheAmt;
+      Quiz.state.save(state);
+      Quiz.ui.renderScores(state);
+      Quiz.ui.showOutcome("Tithe: +" + titheAmt + "!", icon, label, 1800, function () {
+        self._endTurn(state, false);
+      });
+    } else if (tile.type === "earthquake") {
+      state.scores[0] = Math.max(0, state.scores[0] + tile.value);
+      state.scores[1] = Math.max(0, state.scores[1] + tile.value);
+      Quiz.state.save(state);
+      Quiz.ui.renderScores(state);
+      Quiz.ui.showOutcome("Earthquake! " + tile.value + " each!", icon, label, 2000, function () {
+        self._endTurn(state, false);
+      });
+    } else if (tile.type === "gift") {
+      var other = team === 0 ? 1 : 0;
+      var giftAmt = Math.min(tile.value, state.scores[team]);
+      state.scores[team] -= giftAmt;
+      state.scores[other] += giftAmt;
+      Quiz.state.save(state);
+      Quiz.ui.renderScores(state);
+      Quiz.ui.showOutcome("Gifted " + giftAmt + "!", icon, label, 1800, function () {
+        self._endTurn(state, false);
+      });
     }
   },
 
@@ -161,16 +221,33 @@ Quiz.engines.tileBoard = {
   },
 
   _getLabel: function (tile, theme) {
-    return theme.labels[tile.type] || tile.type;
+    var label = theme.labels[tile.type];
+    if (!label) return tile.type;
+    if (Array.isArray(label)) {
+      var idx = tile.variant != null ? tile.variant : 0;
+      return label[idx % label.length];
+    }
+    return label;
   },
 
   _getIcon: function (tile, theme) {
-    return theme.icons[tile.type] || "";
+    var icon = theme.icons[tile.type];
+    if (!icon) return "";
+    if (Array.isArray(icon)) {
+      var idx = tile.variant != null ? tile.variant : 0;
+      return icon[idx % icon.length];
+    }
+    return icon;
   },
 
   _getValue: function (tile) {
     if (tile.type === "bonusTurn") return "";
     if (tile.type === "steal") return "Steal " + tile.value;
+    if (tile.type === "swap") return "Swap!";
+    if (tile.type === "mystery") return "???";
+    if (tile.type === "tithe") return "25%";
+    if (tile.type === "earthquake") return "Both " + tile.value;
+    if (tile.type === "gift") return "Give " + tile.value;
     if (tile.value > 0) return "+" + tile.value;
     if (tile.value < 0) return "" + tile.value;
     return "";

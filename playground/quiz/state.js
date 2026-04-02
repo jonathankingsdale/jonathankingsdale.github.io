@@ -28,9 +28,12 @@ Quiz.state = {
   createTileBoardState: function (themeId) {
     var cfg = Quiz.config.tileBoard;
     var tiles = [];
+    var variantCounters = {};
     cfg.outcomes.forEach(function (o) {
       for (var i = 0; i < o.count; i++) {
-        tiles.push({ type: o.type, value: o.value, revealed: false });
+        var vc = variantCounters[o.type] || 0;
+        tiles.push({ type: o.type, value: o.value, variant: vc, revealed: false });
+        variantCounters[o.type] = vc + 1;
       }
     });
     // Shuffle (Fisher-Yates)

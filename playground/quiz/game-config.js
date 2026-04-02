@@ -3,15 +3,20 @@ window.Quiz = window.Quiz || {};
 Quiz.config = {
   tileBoard: {
     rows: 5,
-    cols: 5,
+    cols: 6,
     outcomes: [
-      { type: "points", value: 100, count: 8 },
-      { type: "points", value: 200, count: 5 },
-      { type: "points", value: 300, count: 3 },
-      { type: "negative", value: -100, count: 3 },
-      { type: "steal", value: 100, count: 2 },
-      { type: "bonusTurn", value: 0, count: 2 },
+      { type: "points", value: 100, count: 3 },
+      { type: "points", value: 200, count: 3 },
+      { type: "points", value: 300, count: 2 },
+      { type: "negative", value: -100, count: 2 },
+      { type: "steal", value: 100, count: 3 },
+      { type: "bonusTurn", value: 0, count: 3 },
       { type: "jackpot", value: 500, count: 2 },
+      { type: "swap", value: 0, count: 2 },
+      { type: "mystery", value: 0, count: 4 },
+      { type: "tithe", value: 0, count: 2 },
+      { type: "earthquake", value: -150, count: 1 },
+      { type: "gift", value: 150, count: 3 },
     ],
   },
 
